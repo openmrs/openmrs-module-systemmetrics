@@ -11,16 +11,29 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.metrics.api.db;
+package org.openmrs.module.systemmetrics;
 
-import org.openmrs.module.metrics.api.PerformanceMonitoringService;
+import java.io.Serializable;
+import org.openmrs.BaseOpenmrsObject;
+import org.openmrs.BaseOpenmrsMetadata;
 
 /**
- *  Database methods for {@link PerformanceMonitoringService}.
+ * It is a model class. It should extend either {@link BaseOpenmrsObject} or {@link BaseOpenmrsMetadata}.
  */
-public interface PerformanceMonitoringDAO {
+public class SystemPerformanceandUtilization extends BaseOpenmrsObject implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
-	/*
-	 * Add DAO methods here
-	 */
+	private Integer id;
+	
+	@Override
+	public Integer getId() {
+		return id;
+	}
+	
+	@Override
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 }

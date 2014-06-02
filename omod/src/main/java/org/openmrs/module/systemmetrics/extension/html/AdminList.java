@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.metrics.extension.html;
+package org.openmrs.module.systemmetrics.extension.html;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ import org.openmrs.module.web.extension.AdministrationSectionExt;
 
 /**
  * This class defines the links that will appear on the administration page under the
- * "metrics.title" heading. 
+ * "systemmetrics.title" heading.
  */
 public class AdminList extends AdministrationSectionExt {
 	
@@ -36,7 +36,7 @@ public class AdminList extends AdministrationSectionExt {
 	 * @see AdministrationSectionExt#getTitle()
 	 */
 	public String getTitle() {
-		return "metrics.title";
+		return "systemmetrics.title";
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class AdminList extends AdministrationSectionExt {
 	 */
 	public Map<String, String> getLinks() {
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("/module/metrics/manage.form", "metrics.manage");
+		map.put("/module/systemmetrics/manage.form", "systemmetrics.manage");
 		return map;
 	}
 	

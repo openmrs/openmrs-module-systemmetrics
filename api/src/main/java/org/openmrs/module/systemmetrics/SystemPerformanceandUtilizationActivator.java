@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.metrics;
+package org.openmrs.module.systemmetrics;
 
 
 import org.apache.commons.logging.Log; 

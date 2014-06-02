@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-/*package org.openmrs.module.metrics.api;
+/*package org.openmrs.module.systemmetrics.api;
 
 import static org.junit.Assert.*;
 import org.junit.Test;

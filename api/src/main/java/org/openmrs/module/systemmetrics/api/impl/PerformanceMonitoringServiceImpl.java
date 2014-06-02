@@ -11,32 +11,34 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.metrics.api.db.hibernate;
+package org.openmrs.module.systemmetrics.api.impl;
 
+import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.SessionFactory;
-import org.openmrs.module.metrics.api.db.PerformanceMonitoringDAO;
+import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
+import org.openmrs.module.systemmetrics.api.db.PerformanceMonitoringDAO;
 
 /**
- * It is a default implementation of  {@link PerformanceMonitoringDAO}.
+ * It is a default implementation of {@link PerformanceMonitoringService}.
  */
-public class HibernatePerformanceMonitoringDAO implements PerformanceMonitoringDAO {
+public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService implements PerformanceMonitoringService {
+	
 	protected final Log log = LogFactory.getLog(this.getClass());
 	
-	private SessionFactory sessionFactory;
+	private PerformanceMonitoringDAO dao;
 	
 	/**
-     * @param sessionFactory the sessionFactory to set
+     * @param dao the dao to set
      */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-	    this.sessionFactory = sessionFactory;
+    public void setDao(PerformanceMonitoringDAO dao) {
+	    this.dao = dao;
     }
     
-	/**
-     * @return the sessionFactory
+    /**
+     * @return the dao
      */
-    public SessionFactory getSessionFactory() {
-	    return sessionFactory;
+    public PerformanceMonitoringDAO getDao() {
+	    return dao;
     }
 }

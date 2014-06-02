@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.metrics.api;
+package org.openmrs.module.systemmetrics.api;
 
 import org.openmrs.api.OpenmrsService;
 import org.springframework.transaction.annotation.Transactional;
