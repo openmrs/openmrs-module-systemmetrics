@@ -18,6 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 import org.openmrs.module.systemmetrics.api.db.PerformanceMonitoringDAO;
+import org.openmrs.module.systemmetrics.api.db.hibernate.HibernateMetricTypeDAO;
 
 /**
  * It is a default implementation of {@link PerformanceMonitoringService}.
@@ -27,6 +28,7 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
 	protected final Log log = LogFactory.getLog(this.getClass());
 	
 	private PerformanceMonitoringDAO dao;
+    private HibernateMetricTypeDAO metricTypeDAO;
 	
 	/**
      * @param dao the dao to set

@@ -21,11 +21,7 @@
 
 	
 	<!-- Services accessible via Context.getService() -->
-	<bean parent="serviceContext">
-		<property name="moduleService">
-			<list>
-				<value>${project.parent.groupId}.${project.parent.artifactId}.api.PerformanceMonitoringService</value>
-				<bean
+	<bean id="monitoringService"
 					class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 					<property name="transactionManager">
 						<ref bean="transactionManager" />
@@ -47,9 +43,23 @@
 					<property name="transactionAttributeSource">
 						<ref bean="transactionAttributeSource" />
 					</property>
-				</bean>
-			</list>
-		</property>
+                    <property name="metricTypeDAO">
+                        <bean
+                            class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateMetricTypeDAO">
+                            <property name="sessionFactory">
+                                <ref bean="sessionFactory" />
+                            </property>
+                        </bean>
+                    </property>
 	</bean>
+
+    <bean parent="serviceContext">
+        <property name="moduleService">
+            <list>
+                <value>${project.parent.groupId}.${project.parent.artifactId}.api.ChartSearchService</value>
+                <ref bean="monitoringService" />
+            </list>
+        </property>
+    </bean>
 	
 </beans>
