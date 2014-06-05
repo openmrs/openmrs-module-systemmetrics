@@ -16,7 +16,7 @@
                 length="38" unique="true" />
         </class>
     -->
-    <class name="MetricType" table="${project.parent.artifactId}_metric_type">
+    <class name="MetricType" table="systemmetrics_metric_type">
 
         <id name="metricId" type="int" column="metric_id">
             <generator class="increment" />

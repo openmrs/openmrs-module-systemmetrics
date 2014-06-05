@@ -14,7 +14,10 @@
 package org.openmrs.module.systemmetrics.api;
 
 import org.openmrs.api.OpenmrsService;
+import org.openmrs.module.systemmetrics.MetricType;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * This service exposes module's core functionality. It is a Spring managed bean which is configured in moduleApplicationContext.xml.
@@ -28,9 +31,10 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 public interface PerformanceMonitoringService extends OpenmrsService {
-     
-	/*
-	 * Add service methods here
-	 * 
-	 */
+
+    public MetricType addMetricType(MetricType metricType);
+
+    public void removeMetricType(MetricType metricType);
+
+    public List<MetricType> getAllMetricTypes();
 }

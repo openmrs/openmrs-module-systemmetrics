@@ -16,6 +16,9 @@ package org.openmrs.module.systemmetrics.web.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.systemmetrics.PerformanceMonitoringUtils;
+import org.openmrs.module.systemmetrics.MetricType;
+import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +34,10 @@ public class  SystemPerformanceandUtilizationManageController {
 	
 	@RequestMapping(value = "/module/systemmetrics/manage", method = RequestMethod.GET)
 	public void manage(ModelMap model) {
+        PerformanceMonitoringService performanceMonitoringService =
+                PerformanceMonitoringUtils.getService();
+        System.out.println(performanceMonitoringService);
+        MetricType type = performanceMonitoringService.addMetricType(new MetricType(1,"Used Memory", "long"));
 		model.addAttribute("user", Context.getAuthenticatedUser());
 	}
 }

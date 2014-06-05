@@ -16,9 +16,13 @@ package org.openmrs.module.systemmetrics.api.impl;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.module.systemmetrics.MetricType;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
+import org.openmrs.module.systemmetrics.api.db.MetricTypeDAO;
 import org.openmrs.module.systemmetrics.api.db.PerformanceMonitoringDAO;
 import org.openmrs.module.systemmetrics.api.db.hibernate.HibernateMetricTypeDAO;
+
+import java.util.List;
 
 /**
  * It is a default implementation of {@link PerformanceMonitoringService}.
@@ -27,20 +31,34 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
 	
 	protected final Log log = LogFactory.getLog(this.getClass());
 	
-	private PerformanceMonitoringDAO dao;
-    private HibernateMetricTypeDAO metricTypeDAO;
-	
-	/**
-     * @param dao the dao to set
-     */
-    public void setDao(PerformanceMonitoringDAO dao) {
-	    this.dao = dao;
+	private PerformanceMonitoringDAO performanceMonitoringDAO;
+    private MetricTypeDAO metricTypeDAO;
+
+    public void setPerformanceMonitoringDAO(PerformanceMonitoringDAO performanceMonitoringDAO) {
+	    this.performanceMonitoringDAO = performanceMonitoringDAO;
     }
-    
-    /**
-     * @return the dao
-     */
-    public PerformanceMonitoringDAO getDao() {
-	    return dao;
+
+    public PerformanceMonitoringDAO getPerformanceMonitoringDAO() {
+	    return performanceMonitoringDAO;
+    }
+
+    public MetricTypeDAO getMetricTypeDAO() {
+        return metricTypeDAO;
+    }
+
+    public void setMetricTypeDAO(HibernateMetricTypeDAO metricTypeDAO) {
+        this.metricTypeDAO = metricTypeDAO;
+    }
+
+    public MetricType addMetricType(MetricType metricType) {
+        return metricTypeDAO.addMetricType(metricType);
+    }
+
+    public void removeMetricType(MetricType metricType) {
+        metricTypeDAO.removeMetricType(metricType);
+    }
+
+    public List<MetricType> getAllMetricTypes() {
+       return metricTypeDAO.getAllMetricTypes();
     }
 }

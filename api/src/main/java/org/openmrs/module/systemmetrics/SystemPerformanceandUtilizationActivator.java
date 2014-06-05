@@ -24,7 +24,7 @@ import org.openmrs.module.ModuleActivator;
 public class SystemPerformanceandUtilizationActivator implements ModuleActivator {
 	
 	protected Log log = LogFactory.getLog(getClass());
-		
+
 	/**
 	 * @see ModuleActivator#willRefreshContext()
 	 */

@@ -21,43 +21,44 @@
 
 	
 	<!-- Services accessible via Context.getService() -->
-	<bean id="monitoringService"
+	<bean id="performanceMonitoringService"
 					class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 					<property name="transactionManager">
 						<ref bean="transactionManager" />
 					</property>
 					<property name="target">
-						<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.impl.PerformanceMonitoringServiceImpl">
-							<property name="dao">
+						<bean class="org.openmrs.module.systemmetrics.api.impl.PerformanceMonitoringServiceImpl">
+							<property name="performanceMonitoringDAO">
 								<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernatePerformanceMonitoringDAO">
 									<property name="sessionFactory">
 										<ref bean="sessionFactory" />
 									</property>
 								</bean>
 							</property>
+                            <property name="metricTypeDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateMetricTypeDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>
 						</bean>
 					</property>
 					<property name="preInterceptors">
 						<ref bean="serviceInterceptors" />
 					</property>
-					<property name="transactionAttributeSource">
-						<ref bean="transactionAttributeSource" />
-					</property>
-                    <property name="metricTypeDAO">
-                        <bean
-                            class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateMetricTypeDAO">
-                            <property name="sessionFactory">
-                                <ref bean="sessionFactory" />
-                            </property>
-                        </bean>
+                    <property name="transactionAttributeSource">
+                        <bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
                     </property>
+
 	</bean>
 
     <bean parent="serviceContext">
         <property name="moduleService">
             <list>
-                <value>${project.parent.groupId}.${project.parent.artifactId}.api.ChartSearchService</value>
-                <ref bean="monitoringService" />
+                <value>org.openmrs.module.systemmetrics.api.PerformanceMonitoringService</value>
+                <ref bean="performanceMonitoringService" />
             </list>
         </property>
     </bean>

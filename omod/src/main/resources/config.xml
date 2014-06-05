@@ -27,11 +27,7 @@
 	</extension>
 	
 	<!-- Maps hibernate file's, if present -->
-	<mappingFiles>
-				
-		SystemPerformanceandUtilization.hbm.xml
-				
-	</mappingFiles>
+    <mapping resource="MetricType.hbm.xml" />
 
 	<!-- Internationalization -->
 	<!-- All message codes should start with ${project.parent.artifactId}. -->
