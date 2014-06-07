@@ -8,5 +8,17 @@
         See http://www.liquibase.org/manual/home#available_database_refactorings
         for a list of supported elements and attributes
     -->
-    
+    <changeSet id="system-metrics-1" author="milinda-ruk">
+        <createTable tableName="systemmetrics_metric_type">
+            <column name="metric_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="metric_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>

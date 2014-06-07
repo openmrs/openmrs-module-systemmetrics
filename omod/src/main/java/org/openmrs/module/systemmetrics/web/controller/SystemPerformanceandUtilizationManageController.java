@@ -36,7 +36,6 @@ public class  SystemPerformanceandUtilizationManageController {
 	public void manage(ModelMap model) {
         PerformanceMonitoringService performanceMonitoringService =
                 PerformanceMonitoringUtils.getService();
-        System.out.println(performanceMonitoringService);
         MetricType type = performanceMonitoringService.addMetricType(new MetricType(1,"Used Memory", "long"));
 		model.addAttribute("user", Context.getAuthenticatedUser());
 	}

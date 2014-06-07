@@ -1,13 +1,26 @@
 package org.openmrs.module.systemmetrics;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
-public class MetricType {
+@Table(name = "systemmetrics_metric_type")
+public class MetricType implements Serializable {
 
+    @Id
+    @Column(name = "metric_id")
     private int metricId;
+
+    @Id
+    @Column(name = "metric_name", length = 255)
     private String metricName;
+
+    @Id
+    @Column(name = "metric_type", length = 255)
     private String metricType;
 
     public MetricType(int metric_id, String metric_name, String metric_type) {
