@@ -34,9 +34,10 @@ public class  SystemPerformanceandUtilizationManageController {
 	
 	@RequestMapping(value = "/module/systemmetrics/manage", method = RequestMethod.GET)
 	public void manage(ModelMap model) {
-        PerformanceMonitoringService performanceMonitoringService =
+        /*PerformanceMonitoringService performanceMonitoringService =
                 PerformanceMonitoringUtils.getService();
         MetricType type = performanceMonitoringService.addMetricType(new MetricType(1,"Used Memory", "long"));
-		model.addAttribute("user", Context.getAuthenticatedUser());
+		*/
+        model.addAttribute("user", Context.getAuthenticatedUser());
 	}
 }

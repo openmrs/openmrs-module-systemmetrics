@@ -6,9 +6,13 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PerformanceMonitoringUtils {
 
     public static Log log = LogFactory.getLog(PerformanceMonitoringUtils.class);
+
 
     /**
      * Returns the PerformanceMonitoring service from the Context
@@ -17,5 +21,13 @@ public class PerformanceMonitoringUtils {
      */
     public static PerformanceMonitoringService getService() {
         return Context.getService(PerformanceMonitoringService.class);
+    }
+
+    public static void loadCurrentlyAvailableMetircTypes() {
+        List<MetricType> currentMetrics = new ArrayList<MetricType>();
+        MetricType usedMem = getService().addMetricType(new MetricType(1, "Used Memory", "long"));
+        MetricType freeMem = getService().addMetricType(new MetricType(2,"Free Memory", "long"));
+        currentMetrics.add(usedMem);
+        currentMetrics.add(freeMem);
     }
 }
