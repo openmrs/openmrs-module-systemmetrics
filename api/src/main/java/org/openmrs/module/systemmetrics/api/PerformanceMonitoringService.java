@@ -15,6 +15,7 @@ package org.openmrs.module.systemmetrics.api;
 
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.systemmetrics.MetricType;
+import org.openmrs.module.systemmetrics.MetricValue;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -37,4 +38,8 @@ public interface PerformanceMonitoringService extends OpenmrsService {
     public void removeMetricType(MetricType metricType);
 
     public List<MetricType> getAllMetricTypes();
+
+    public MetricValue addMetricValue(MetricValue metricValue);
+
+    public void removeMetricVale(MetricValue metricValue);
 }

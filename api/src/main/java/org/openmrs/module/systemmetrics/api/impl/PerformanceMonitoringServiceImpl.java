@@ -17,8 +17,11 @@ import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.systemmetrics.MetricType;
+import org.openmrs.module.systemmetrics.MetricValue;
+import org.openmrs.module.systemmetrics.PerformanceMonitoringUtils;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 import org.openmrs.module.systemmetrics.api.db.MetricTypeDAO;
+import org.openmrs.module.systemmetrics.api.db.MetricValueDAO;
 import org.openmrs.module.systemmetrics.api.db.PerformanceMonitoringDAO;
 import org.openmrs.module.systemmetrics.api.db.hibernate.HibernateMetricTypeDAO;
 
@@ -33,6 +36,7 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
 	
 	private PerformanceMonitoringDAO performanceMonitoringDAO;
     private MetricTypeDAO metricTypeDAO;
+    private MetricValueDAO metricValueDAO;
 
     public void setPerformanceMonitoringDAO(PerformanceMonitoringDAO performanceMonitoringDAO) {
 	    this.performanceMonitoringDAO = performanceMonitoringDAO;
@@ -50,6 +54,7 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
         this.metricTypeDAO = metricTypeDAO;
     }
 
+
     public MetricType addMetricType(MetricType metricType) {
         return metricTypeDAO.addMetricType(metricType);
     }
@@ -61,4 +66,14 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
     public List<MetricType> getAllMetricTypes() {
        return metricTypeDAO.getAllMetricTypes();
     }
+
+    public MetricValue addMetricValue(MetricValue metricValue) {
+        return metricValueDAO.addMetricValue(metricValue);
+    }
+
+    public void removeMetricVale(MetricValue metricValue) {
+        metricValueDAO.removeMetricValue(metricValue);
+    }
+
+
 }
