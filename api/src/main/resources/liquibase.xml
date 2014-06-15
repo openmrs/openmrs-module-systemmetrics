@@ -21,7 +21,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="system-metrics-2" author="milinda-ruk">
+    <changeSet id="system-metrics-10" author="milinda-ruk">
         <createTable tableName="systemmetrics_metric_value">
             <column name="timestamp" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>

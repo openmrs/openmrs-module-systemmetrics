@@ -51,7 +51,7 @@ public class SystemPerformanceandUtilizationActivator implements ModuleActivator
 	 */
 	public void started() {
 		log.info("System Performance and Utilization Module started");
-        PerformanceMonitoringUtils.loadCurrentlyAvailableMetircTypes();
+        PerformanceMonitoringUtils.startInitialProcesses();
 	}
 	
 	/**

@@ -1,15 +1,13 @@
 package org.openmrs.module.systemmetrics.api.collectors;
 
 
+import org.openmrs.api.context.Context;
 import org.openmrs.module.systemmetrics.MetricValue;
-import org.openmrs.module.systemmetrics.PerformanceMonitoringUtils;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
-import java.sql.Timestamp;
-import java.util.Date;
 
 public class UsedMemoryCollectorThread implements Runnable{
 
@@ -21,14 +19,17 @@ public class UsedMemoryCollectorThread implements Runnable{
     PerformanceMonitoringService performanceMonitoringService;
 
     public UsedMemoryCollectorThread() {
-        performanceMonitoringService =
-                PerformanceMonitoringUtils.getService();
+//        Context.openSession();
+        startUsedMemoryCollector();
+//        performanceMonitoringService = Context.getService(PerformanceMonitoringService.class);
         memoryBean = ManagementFactory.getMemoryMXBean();
     }
 
+
     @Override
     public void run() {
-
+        Context.openSession();
+        performanceMonitoringService = Context.getService(PerformanceMonitoringService.class);
         while (start){
            memoryUsage = memoryBean.getHeapMemoryUsage();
            usedMemoryValue = new MetricValue(1,System.currentTimeMillis(), memoryUsage.getUsed());

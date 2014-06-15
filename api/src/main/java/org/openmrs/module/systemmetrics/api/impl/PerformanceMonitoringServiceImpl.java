@@ -55,6 +55,14 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
     }
 
 
+    public MetricValueDAO getMetricValueDAO() {
+        return metricValueDAO;
+    }
+
+    public void setMetricValueDAO(MetricValueDAO metricValueDAO) {
+        this.metricValueDAO = metricValueDAO;
+    }
+
     public MetricType addMetricType(MetricType metricType) {
         return metricTypeDAO.addMetricType(metricType);
     }

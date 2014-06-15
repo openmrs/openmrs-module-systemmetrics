@@ -43,6 +43,14 @@
                                     </property>
                                 </bean>
                             </property>
+                            <property name="metricValueDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateMetricValueDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>
 						</bean>
 					</property>
 					<property name="preInterceptors">
