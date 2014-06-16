@@ -19,9 +19,8 @@ public class UsedMemoryCollectorThread implements Runnable{
     PerformanceMonitoringService performanceMonitoringService;
 
     public UsedMemoryCollectorThread() {
-//        Context.openSession();
+
         startUsedMemoryCollector();
-//        performanceMonitoringService = Context.getService(PerformanceMonitoringService.class);
         memoryBean = ManagementFactory.getMemoryMXBean();
     }
 
