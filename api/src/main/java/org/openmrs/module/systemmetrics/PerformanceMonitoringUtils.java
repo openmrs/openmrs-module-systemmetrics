@@ -5,6 +5,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
+import org.openmrs.module.systemmetrics.api.collectors.PerMinuteUsedMemoryCollectorThread;
 import org.openmrs.module.systemmetrics.api.collectors.UsedMemoryCollectorThread;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class PerformanceMonitoringUtils {
     public static Log log = LogFactory.getLog(PerformanceMonitoringUtils.class);
 
     public static UsedMemoryCollectorThread usedMemoryCollectorThread ;
+    public static PerMinuteUsedMemoryCollectorThread perMinuteUsedMemoryCollectorThread;
     /**
      * Returns the PerformanceMonitoring service from the Context
      *
@@ -38,5 +40,8 @@ public class PerformanceMonitoringUtils {
         usedMemoryCollectorThread = new UsedMemoryCollectorThread();
         Thread collectorThread = new Thread(usedMemoryCollectorThread);
         collectorThread.start();
+        perMinuteUsedMemoryCollectorThread = new PerMinuteUsedMemoryCollectorThread();
+        Thread perMinCollectorThread = new Thread(perMinuteUsedMemoryCollectorThread);
+        perMinCollectorThread.start();
     }
 }

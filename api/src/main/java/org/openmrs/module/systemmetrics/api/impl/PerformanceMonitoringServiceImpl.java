@@ -19,9 +19,11 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.systemmetrics.MetricType;
 import org.openmrs.module.systemmetrics.MetricValue;
 import org.openmrs.module.systemmetrics.PerformanceMonitoringUtils;
+import org.openmrs.module.systemmetrics.api.PerMinMetricValue;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 import org.openmrs.module.systemmetrics.api.db.MetricTypeDAO;
 import org.openmrs.module.systemmetrics.api.db.MetricValueDAO;
+import org.openmrs.module.systemmetrics.api.db.PerMinMetricValueDAO;
 import org.openmrs.module.systemmetrics.api.db.PerformanceMonitoringDAO;
 import org.openmrs.module.systemmetrics.api.db.hibernate.HibernateMetricTypeDAO;
 
@@ -37,6 +39,7 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
 	private PerformanceMonitoringDAO performanceMonitoringDAO;
     private MetricTypeDAO metricTypeDAO;
     private MetricValueDAO metricValueDAO;
+    private PerMinMetricValueDAO perMinMetricValueDAO;
 
     public void setPerformanceMonitoringDAO(PerformanceMonitoringDAO performanceMonitoringDAO) {
 	    this.performanceMonitoringDAO = performanceMonitoringDAO;
@@ -63,6 +66,14 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
         this.metricValueDAO = metricValueDAO;
     }
 
+    public PerMinMetricValueDAO getPerMinMetricValueDAO() {
+        return perMinMetricValueDAO;
+    }
+
+    public void setPerMinMetricValueDAO(PerMinMetricValueDAO perMinMetricValueDAO) {
+        this.perMinMetricValueDAO = perMinMetricValueDAO;
+    }
+
     public MetricType addMetricType(MetricType metricType) {
         return metricTypeDAO.addMetricType(metricType);
     }
@@ -81,6 +92,16 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
 
     public void removeMetricVale(MetricValue metricValue) {
         metricValueDAO.removeMetricValue(metricValue);
+    }
+
+    @Override
+    public PerMinMetricValue getMetricValue(long startTimestamp, long endTimestamp) {
+        return metricValueDAO.getMetricValue(startTimestamp,endTimestamp);
+    }
+
+    @Override
+    public PerMinMetricValue addPerMinMetricValue(PerMinMetricValue perMinMetricValue) {
+        return perMinMetricValueDAO.addMetricValue(perMinMetricValue);
     }
 
 
