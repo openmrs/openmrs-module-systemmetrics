@@ -33,7 +33,7 @@ public class PerMinuteUsedMemoryCollectorThread implements Runnable {
             endTimestamp = System.currentTimeMillis();
             PerMinMetricValue perMinValue = performanceMonitoringService.getMetricValue(startTimestamp,endTimestamp);
             performanceMonitoringService.addPerMinMetricValue(perMinValue);
-            System.out.println("PerMinuteUsedMemoryCollectorThread  added " + perMinValue.getMetricValue() + "- " + perMinValue.getTimestamp());
+           // System.out.println("PerMinuteUsedMemoryCollectorThread  added " + perMinValue.getMetricValue() + "- " + perMinValue.getTimestamp());
 
         }
     }
