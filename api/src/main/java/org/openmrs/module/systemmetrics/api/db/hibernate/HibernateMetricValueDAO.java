@@ -59,5 +59,10 @@ public class HibernateMetricValueDAO implements MetricValueDAO {
        return new PerMinMetricValue(1,System.currentTimeMillis(), averageValue);
     }
 
+    @Override
+    public List<MetricValue> getMetricValuesForChart(long startTimestamp, long endTimestamp) {
+        Query query =  sessionFactory.getCurrentSession().createQuery("from MetricValue where timestamp > :startTimestamp and timestamp < :endTimestamp").setParameter("startTimestamp", startTimestamp).setParameter("endTimestamp", endTimestamp);
+        return query.list();
 
+    }
 }

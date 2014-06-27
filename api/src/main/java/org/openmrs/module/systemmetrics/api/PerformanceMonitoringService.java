@@ -46,4 +46,6 @@ public interface PerformanceMonitoringService extends OpenmrsService {
     public PerMinMetricValue getMetricValue(long startTimestamp, long endTimestamp);
 
     public PerMinMetricValue addPerMinMetricValue (PerMinMetricValue perMinMetricValue);
+
+    public List<MetricValue> getMetricValuesForChart(long startTimestamp, long endTimestamp);
 }

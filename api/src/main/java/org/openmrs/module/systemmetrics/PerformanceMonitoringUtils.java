@@ -9,6 +9,7 @@ import org.openmrs.module.systemmetrics.api.collectors.PerMinuteUsedMemoryCollec
 import org.openmrs.module.systemmetrics.api.collectors.UsedMemoryCollectorThread;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PerformanceMonitoringUtils {
@@ -43,5 +44,22 @@ public class PerformanceMonitoringUtils {
         perMinuteUsedMemoryCollectorThread = new PerMinuteUsedMemoryCollectorThread();
         Thread perMinCollectorThread = new Thread(perMinuteUsedMemoryCollectorThread);
         perMinCollectorThread.start();
+    }
+
+    /**
+     * Renders the metric values as Date <-> Memory value pairs and makes a javascript 2d array in order to be
+     * parsed to @chart.jsp to draw the memory usage graph
+     * @param valueList
+     * @return
+     */
+    public static String prepareDataToGraph(List<MetricValue> valueList) {
+
+        String fullEntry = "";
+        for(MetricValue metricValue : valueList){
+            // the final parsed array elements would be in format [new Date(1403842448), 636]  etc.
+            String oneEntry = "[new Date(" + (metricValue.getTimestamp()) + " ), " + (metricValue.getMetricValue()/1000000) + "],";
+            fullEntry = fullEntry + oneEntry;
+        }
+        return fullEntry;
     }
 }

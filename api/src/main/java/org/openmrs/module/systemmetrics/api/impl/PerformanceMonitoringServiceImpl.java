@@ -104,5 +104,8 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
         return perMinMetricValueDAO.addMetricValue(perMinMetricValue);
     }
 
-
+    @Override
+    public List<MetricValue> getMetricValuesForChart(long startTimestamp, long endTimestamp) {
+        return metricValueDAO.getMetricValuesForChart(startTimestamp,endTimestamp);
+    }
 }
