@@ -16,6 +16,7 @@ package org.openmrs.module.systemmetrics.api;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.systemmetrics.MetricType;
 import org.openmrs.module.systemmetrics.MetricValue;
+import org.openmrs.module.systemmetrics.PerMinMetricValue;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -48,4 +49,10 @@ public interface PerformanceMonitoringService extends OpenmrsService {
     public PerMinMetricValue addPerMinMetricValue (PerMinMetricValue perMinMetricValue);
 
     public List<MetricValue> getMetricValuesForChart(long startTimestamp, long endTimestamp);
+
+    public List<PerMinMetricValue> getPerMinMetricValuesForChart(long startTimestamp, long endTimestamp);
+
+    public void removeMetricValuesInPreviousMins(long startTimestamp, long endTimestamp);
+
+    public void removePerminuteMetricValuesInPreviousHours(long startTimestamp, long endTimestamp);
 }

@@ -32,10 +32,9 @@ public class UsedMemoryCollectorThread implements Runnable{
         while (start){
            memoryUsage = memoryBean.getHeapMemoryUsage();
            usedMemoryValue = new MetricValue(1,System.currentTimeMillis(), memoryUsage.getUsed());
-          // System.out.println("UsedMemoryCollectorThread added: " + memoryUsage.getUsed() + " and current time: " + System.currentTimeMillis());
            performanceMonitoringService.addMetricValue(usedMemoryValue);
             try {
-                Thread.sleep(10000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 /* ignore*/
             }

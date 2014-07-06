@@ -17,8 +17,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.systemmetrics.MetricValue;
+import org.openmrs.module.systemmetrics.PerMinMetricValue;
 import org.openmrs.module.systemmetrics.PerformanceMonitoringUtils;
-import org.openmrs.module.systemmetrics.MetricType;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -40,15 +40,18 @@ public class  SystemPerformanceandUtilizationManageController {
         model.addAttribute("user", Context.getAuthenticatedUser());
         }
 
-    @RequestMapping(value = "/module/systemmetrics/chart", method = RequestMethod.GET)
+    @RequestMapping(value = "/module/systemmetrics/usedMemoryChart", method = RequestMethod.GET)
     public void chart(ModelMap model) {
         model.addAttribute("user", Context.getAuthenticatedUser());
         PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
-        // todo: currently we fetch data from table by using timestamp based logic. this needs to be changed to a contant count
-        // todo: for the 1.0 release
-        List<MetricValue> valueList = service.getMetricValuesForChart(System.currentTimeMillis()-30000,System.currentTimeMillis());
+        // We get the memory data in the previous minute to display in the graph
+        List<MetricValue> valueList = service.getMetricValuesForChart(System.currentTimeMillis()-120000,System.currentTimeMillis());
         String dataToGraph = PerformanceMonitoringUtils.prepareDataToGraph(valueList);
         model.addAttribute("values", dataToGraph);
+        List<PerMinMetricValue> perMinValueList = service.getPerMinMetricValuesForChart(System.currentTimeMillis() - 1200000, System.currentTimeMillis());
+        String perMinDataToGraph = PerformanceMonitoringUtils.preparePerMinDataToGraph(perMinValueList);
+        model.addAttribute("perMinValues", perMinDataToGraph);
+
 
     }
 }

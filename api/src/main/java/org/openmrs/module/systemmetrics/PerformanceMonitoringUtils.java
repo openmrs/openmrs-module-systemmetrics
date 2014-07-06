@@ -6,11 +6,11 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 import org.openmrs.module.systemmetrics.api.collectors.PerMinuteUsedMemoryCollectorThread;
+import org.openmrs.module.systemmetrics.api.collectors.PerMinuteUsedMemoryDeletionThread;
 import org.openmrs.module.systemmetrics.api.collectors.UsedMemoryCollectorThread;
+import org.openmrs.module.systemmetrics.api.collectors.UsedMemoryDeletionThread;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class PerformanceMonitoringUtils {
 
@@ -18,6 +18,8 @@ public class PerformanceMonitoringUtils {
 
     public static UsedMemoryCollectorThread usedMemoryCollectorThread ;
     public static PerMinuteUsedMemoryCollectorThread perMinuteUsedMemoryCollectorThread;
+    public static UsedMemoryDeletionThread usedMemoryDeletionThread;
+    public static PerMinuteUsedMemoryDeletionThread perMinuteUsedMemoryDeletionThread;
     /**
      * Returns the PerformanceMonitoring service from the Context
      *
@@ -44,10 +46,17 @@ public class PerformanceMonitoringUtils {
         perMinuteUsedMemoryCollectorThread = new PerMinuteUsedMemoryCollectorThread();
         Thread perMinCollectorThread = new Thread(perMinuteUsedMemoryCollectorThread);
         perMinCollectorThread.start();
+        usedMemoryDeletionThread = new UsedMemoryDeletionThread();
+        Thread deletorThread = new Thread(usedMemoryDeletionThread);
+        deletorThread.start();
+        perMinuteUsedMemoryDeletionThread = new PerMinuteUsedMemoryDeletionThread();
+        Thread perMinDeletorThread = new Thread(perMinuteUsedMemoryDeletionThread);
+        perMinDeletorThread.start();
+
     }
 
     /**
-     * Renders the metric values as Date <-> Memory value pairs and makes a javascript 2d array in order to be
+     * Renders the metric values as [Date,Memory] value pairs and makes a javascript 2d array in order to be
      * parsed to @chart.jsp to draw the memory usage graph
      * @param valueList
      * @return
@@ -61,5 +70,24 @@ public class PerformanceMonitoringUtils {
             fullEntry = fullEntry + oneEntry;
         }
         return fullEntry;
+    }
+
+    public static void stopCurrentlyRunningProcesses() {
+        usedMemoryCollectorThread.stopUsedMemoryCollector();
+        perMinuteUsedMemoryCollectorThread.stopPerMinMemoryCollector();
+        usedMemoryDeletionThread.stopUsedMemoryDeletionThread();
+        perMinuteUsedMemoryDeletionThread.stopPerminUsedMemoryDeletionThread();
+    }
+
+    public static String preparePerMinDataToGraph(List<PerMinMetricValue> perMinValueList) {
+        Collections.sort(perMinValueList);
+        String fullEntry = "";
+        for(PerMinMetricValue metricValue : perMinValueList){
+            // the final parsed array elements would be in format [new Date(1403842448), 636]  etc.
+            String oneEntry = "[new Date(" + (metricValue.getTimestamp()) + " ), " + (metricValue.getMetricValue()/1000000) + "],";
+            fullEntry = fullEntry + oneEntry;
+        }
+        return fullEntry;
+
     }
 }

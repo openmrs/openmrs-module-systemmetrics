@@ -18,8 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.systemmetrics.MetricType;
 import org.openmrs.module.systemmetrics.MetricValue;
-import org.openmrs.module.systemmetrics.PerformanceMonitoringUtils;
-import org.openmrs.module.systemmetrics.api.PerMinMetricValue;
+import org.openmrs.module.systemmetrics.PerMinMetricValue;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 import org.openmrs.module.systemmetrics.api.db.MetricTypeDAO;
 import org.openmrs.module.systemmetrics.api.db.MetricValueDAO;
@@ -107,5 +106,20 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
     @Override
     public List<MetricValue> getMetricValuesForChart(long startTimestamp, long endTimestamp) {
         return metricValueDAO.getMetricValuesForChart(startTimestamp,endTimestamp);
+    }
+
+    @Override
+    public void removeMetricValuesInPreviousMins(long startTimestamp, long endTimestamp) {
+        metricValueDAO.removeMetricValuesInPreviousMins(startTimestamp, endTimestamp);
+    }
+
+    @Override
+    public void removePerminuteMetricValuesInPreviousHours(long startTimestamp, long endTimestamp) {
+        perMinMetricValueDAO.removePerminuteMetricValuesInPreviousHours(startTimestamp,endTimestamp);
+    }
+
+    @Override
+    public List<PerMinMetricValue> getPerMinMetricValuesForChart(long startTimestamp, long endTimestamp) {
+        return perMinMetricValueDAO.getPerMinMetricValuesForChart(startTimestamp,endTimestamp);
     }
 }

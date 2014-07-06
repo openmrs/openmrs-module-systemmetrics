@@ -1,10 +1,13 @@
 package org.openmrs.module.systemmetrics.api.collectors;
 
 import org.openmrs.api.context.Context;
-import org.openmrs.module.systemmetrics.PerMinMetricValue;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 
-public class PerMinuteUsedMemoryCollectorThread implements Runnable {
+/**
+ * This threads runs in every 30 minute and delete the last 30 minutes' used memory data entries from
+ * systemmetrics_metric_value table.
+ */
+public class UsedMemoryDeletionThread implements Runnable{
 
     private boolean start;
     private long startTimestamp;
@@ -12,9 +15,8 @@ public class PerMinuteUsedMemoryCollectorThread implements Runnable {
 
     PerformanceMonitoringService performanceMonitoringService;
 
-    public PerMinuteUsedMemoryCollectorThread() {
-
-      startPerMinMemoryCollector();
+    public UsedMemoryDeletionThread() {
+       startUsedMemoryDeletionThread();
     }
 
     @Override
@@ -24,25 +26,20 @@ public class PerMinuteUsedMemoryCollectorThread implements Runnable {
         while (start){
             startTimestamp = System.currentTimeMillis();
             try {
-                Thread.sleep(60000);
+                Thread.sleep(60000*5*6);
             } catch (InterruptedException e) {
                 /* ignore*/
             }
             endTimestamp = System.currentTimeMillis();
-            PerMinMetricValue perMinValue = performanceMonitoringService.getMetricValue(startTimestamp,endTimestamp);
-            if(perMinValue != null){
-              performanceMonitoringService.addPerMinMetricValue(perMinValue);
-            }
+            performanceMonitoringService.removeMetricValuesInPreviousMins(startTimestamp, endTimestamp);
         }
     }
 
-    public void startPerMinMemoryCollector(){
+    public void startUsedMemoryDeletionThread(){
         start = true;
     }
 
-    public void stopPerMinMemoryCollector(){
+    public void stopUsedMemoryDeletionThread(){
         start = false;
     }
-
-
 }

@@ -1,4 +1,4 @@
-package org.openmrs.module.systemmetrics.api;
+package org.openmrs.module.systemmetrics;
 
 
 import javax.persistence.Column;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "systemmetrics_permin_metric_value")
-public class PerMinMetricValue {
+public class PerMinMetricValue implements Comparable<PerMinMetricValue>{
 
     @Column(name = "timestamp")
     private long timestamp;
@@ -19,6 +19,9 @@ public class PerMinMetricValue {
     @Id
     @Column(name = "metric_value")
     private long metricValue;
+
+    public PerMinMetricValue() {
+    }
 
     public PerMinMetricValue(int metric_id, long timestamp, long metric_value) {
         this.metricId = metric_id;
@@ -48,5 +51,10 @@ public class PerMinMetricValue {
 
     public void setMetricValue(long metricValue) {
         this.metricValue = metricValue;
+    }
+
+    @Override
+    public int compareTo(PerMinMetricValue o) {
+        return (getTimestamp()<o.getTimestamp()? -1 : (getTimestamp() ==o.getTimestamp()? 0 : 1));
     }
 }

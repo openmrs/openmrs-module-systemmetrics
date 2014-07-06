@@ -1,4 +1,5 @@
-<spring:htmlEscape defaultHtmlEscape="true" />
+<spring:htmlEscape defaultHtmlEscape="true"/>
+
 <ul id="menu">
 	<li class="first"><a
 		href="${pageContext.request.contextPath}/admin"><spring:message
@@ -7,7 +8,7 @@
 	<li
 		<c:if test='<%= request.getRequestURI().contains("/manage") %>'>class="active"</c:if>>
 		<a
-		href="${pageContext.request.contextPath}/module/metrics/manage.form"><spring:message
+		href="${pageContext.request.contextPath}/module/systemmetrics/manage.form"><spring:message
 				code="metrics.manage" /></a>
 	</li>
 	

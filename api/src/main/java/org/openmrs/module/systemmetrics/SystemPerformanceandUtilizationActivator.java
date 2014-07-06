@@ -59,6 +59,7 @@ public class SystemPerformanceandUtilizationActivator implements ModuleActivator
 	 */
 	public void willStop() {
 		log.info("Stopping System Performance and Utilization Module");
+        PerformanceMonitoringUtils.stopCurrentlyRunningProcesses();
 	}
 	
 	/**
