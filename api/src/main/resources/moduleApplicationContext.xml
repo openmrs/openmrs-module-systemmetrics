@@ -59,6 +59,14 @@
                                     </property>
                                 </bean>
                             </property>
+                            <property name="loginValueDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateLoginValueDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>
 						</bean>
 					</property>
 					<property name="preInterceptors">

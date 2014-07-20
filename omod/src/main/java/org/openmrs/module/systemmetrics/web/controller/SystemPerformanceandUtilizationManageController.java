@@ -20,6 +20,8 @@ import org.openmrs.module.systemmetrics.MetricValue;
 import org.openmrs.module.systemmetrics.PerMinMetricValue;
 import org.openmrs.module.systemmetrics.PerformanceMonitoringUtils;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
+import org.openmrs.module.systemmetrics.api.collectors.LoggedInUsersCountCollectorThread;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,10 +36,14 @@ import java.util.List;
 public class  SystemPerformanceandUtilizationManageController {
 	
 	protected final Log log = LogFactory.getLog(getClass());
+    protected LoggedInUsersCountCollectorThread loggedInUsersCountCollectorThread;
 
-	@RequestMapping(value = "/module/systemmetrics/manage", method = RequestMethod.GET)
-	public void manage(ModelMap model) {
+    @RequestMapping(value = "/module/systemmetrics/manage", method = RequestMethod.GET)
+	public void manage(HttpRequest request, ModelMap model) {
         model.addAttribute("user", Context.getAuthenticatedUser());
+        loggedInUsersCountCollectorThread = new LoggedInUsersCountCollectorThread();
+        Thread loginThread = new Thread(loggedInUsersCountCollectorThread);
+        loginThread.start();
         }
 
     @RequestMapping(value = "/module/systemmetrics/usedMemoryChart", method = RequestMethod.GET)

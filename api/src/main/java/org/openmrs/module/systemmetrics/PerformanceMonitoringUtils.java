@@ -5,10 +5,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
-import org.openmrs.module.systemmetrics.api.collectors.PerMinuteUsedMemoryCollectorThread;
-import org.openmrs.module.systemmetrics.api.collectors.PerMinuteUsedMemoryDeletionThread;
-import org.openmrs.module.systemmetrics.api.collectors.UsedMemoryCollectorThread;
-import org.openmrs.module.systemmetrics.api.collectors.UsedMemoryDeletionThread;
+import org.openmrs.module.systemmetrics.api.collectors.*;
 
 import java.util.*;
 
@@ -20,6 +17,7 @@ public class PerformanceMonitoringUtils {
     public static PerMinuteUsedMemoryCollectorThread perMinuteUsedMemoryCollectorThread;
     public static UsedMemoryDeletionThread usedMemoryDeletionThread;
     public static PerMinuteUsedMemoryDeletionThread perMinuteUsedMemoryDeletionThread;
+    public static LoggedInUsersCountCollectorThread loggedInUsersCountCollectorThread;
     /**
      * Returns the PerformanceMonitoring service from the Context
      *
@@ -33,8 +31,10 @@ public class PerformanceMonitoringUtils {
         List<MetricType> currentMetrics = new ArrayList<MetricType>();
         MetricType usedMem = getService().addMetricType(new MetricType(1, "Used Memory", "long"));
         MetricType freeMem = getService().addMetricType(new MetricType(2,"Free Memory", "long"));
+        MetricType logins = getService().addMetricType(new MetricType(3,"Logged in Users", "int"));
         currentMetrics.add(usedMem);
         currentMetrics.add(freeMem);
+        currentMetrics.add(logins);
     }
 
     public static void startInitialProcesses(){
@@ -52,6 +52,9 @@ public class PerformanceMonitoringUtils {
         perMinuteUsedMemoryDeletionThread = new PerMinuteUsedMemoryDeletionThread();
         Thread perMinDeletorThread = new Thread(perMinuteUsedMemoryDeletionThread);
         perMinDeletorThread.start();
+        loggedInUsersCountCollectorThread = new LoggedInUsersCountCollectorThread();
+        Thread loginThread = new Thread(loggedInUsersCountCollectorThread);
+        loginThread.start();
 
     }
 
@@ -77,6 +80,7 @@ public class PerformanceMonitoringUtils {
         perMinuteUsedMemoryCollectorThread.stopPerMinMemoryCollector();
         usedMemoryDeletionThread.stopUsedMemoryDeletionThread();
         perMinuteUsedMemoryDeletionThread.stopPerminUsedMemoryDeletionThread();
+        loggedInUsersCountCollectorThread.stopLoggedInUsersCountCollectorThread();
     }
 
     public static String preparePerMinDataToGraph(List<PerMinMetricValue> perMinValueList) {

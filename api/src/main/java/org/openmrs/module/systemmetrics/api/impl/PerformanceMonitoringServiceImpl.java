@@ -16,14 +16,12 @@ package org.openmrs.module.systemmetrics.api.impl;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.module.systemmetrics.LoginValue;
 import org.openmrs.module.systemmetrics.MetricType;
 import org.openmrs.module.systemmetrics.MetricValue;
 import org.openmrs.module.systemmetrics.PerMinMetricValue;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
-import org.openmrs.module.systemmetrics.api.db.MetricTypeDAO;
-import org.openmrs.module.systemmetrics.api.db.MetricValueDAO;
-import org.openmrs.module.systemmetrics.api.db.PerMinMetricValueDAO;
-import org.openmrs.module.systemmetrics.api.db.PerformanceMonitoringDAO;
+import org.openmrs.module.systemmetrics.api.db.*;
 import org.openmrs.module.systemmetrics.api.db.hibernate.HibernateMetricTypeDAO;
 
 import java.util.List;
@@ -39,6 +37,7 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
     private MetricTypeDAO metricTypeDAO;
     private MetricValueDAO metricValueDAO;
     private PerMinMetricValueDAO perMinMetricValueDAO;
+    private LoginValueDAO loginValueDAO;
 
     public void setPerformanceMonitoringDAO(PerformanceMonitoringDAO performanceMonitoringDAO) {
 	    this.performanceMonitoringDAO = performanceMonitoringDAO;
@@ -71,6 +70,14 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
 
     public void setPerMinMetricValueDAO(PerMinMetricValueDAO perMinMetricValueDAO) {
         this.perMinMetricValueDAO = perMinMetricValueDAO;
+    }
+
+    public LoginValueDAO getLoginValueDAO() {
+        return loginValueDAO;
+    }
+
+    public void setLoginValueDAO(LoginValueDAO loginValueDAO) {
+        this.loginValueDAO = loginValueDAO;
     }
 
     public MetricType addMetricType(MetricType metricType) {
@@ -121,5 +128,25 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
     @Override
     public List<PerMinMetricValue> getPerMinMetricValuesForChart(long startTimestamp, long endTimestamp) {
         return perMinMetricValueDAO.getPerMinMetricValuesForChart(startTimestamp,endTimestamp);
+    }
+
+    @Override
+    public LoginValue addLoginValue(LoginValue loginValue) {
+        return loginValueDAO.addLoginValue(loginValue);
+    }
+
+    @Override
+    public void removeLoginValue(LoginValue loginValue) {
+        loginValueDAO.removeLoginValue(loginValue);
+    }
+
+    @Override
+    public List<LoginValue> getLoginValuesForChart(long startTimestamp, long endTimestamp) {
+        return loginValueDAO.getLoginValuesForChart(startTimestamp,endTimestamp);
+    }
+
+    @Override
+    public void removeLoginValuesWithinTime(long startTimestamp, long endTimestamp) {
+        loginValueDAO.removeLoginValuesWithinTime(startTimestamp,endTimestamp);
     }
 }

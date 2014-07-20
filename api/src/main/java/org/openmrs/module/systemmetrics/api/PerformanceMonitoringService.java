@@ -14,6 +14,7 @@
 package org.openmrs.module.systemmetrics.api;
 
 import org.openmrs.api.OpenmrsService;
+import org.openmrs.module.systemmetrics.LoginValue;
 import org.openmrs.module.systemmetrics.MetricType;
 import org.openmrs.module.systemmetrics.MetricValue;
 import org.openmrs.module.systemmetrics.PerMinMetricValue;
@@ -55,4 +56,13 @@ public interface PerformanceMonitoringService extends OpenmrsService {
     public void removeMetricValuesInPreviousMins(long startTimestamp, long endTimestamp);
 
     public void removePerminuteMetricValuesInPreviousHours(long startTimestamp, long endTimestamp);
+
+    public LoginValue addLoginValue(LoginValue loginValue);
+
+    public void removeLoginValue(LoginValue loginValue);
+
+    public List<LoginValue> getLoginValuesForChart(long startTimestamp, long endTimestamp);
+
+    public void removeLoginValuesWithinTime(long startTimestamp, long endTimestamp);
+
 }
