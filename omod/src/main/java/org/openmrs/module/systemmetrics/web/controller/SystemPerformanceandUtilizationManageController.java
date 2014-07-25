@@ -16,17 +16,20 @@ package org.openmrs.module.systemmetrics.web.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.systemmetrics.LoginValue;
 import org.openmrs.module.systemmetrics.MetricValue;
 import org.openmrs.module.systemmetrics.PerMinMetricValue;
 import org.openmrs.module.systemmetrics.PerformanceMonitoringUtils;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 import org.openmrs.module.systemmetrics.api.collectors.LoggedInUsersCountCollectorThread;
-import org.springframework.http.HttpRequest;
+import org.openmrs.web.user.CurrentUsers;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -39,11 +42,9 @@ public class  SystemPerformanceandUtilizationManageController {
     protected LoggedInUsersCountCollectorThread loggedInUsersCountCollectorThread;
 
     @RequestMapping(value = "/module/systemmetrics/manage", method = RequestMethod.GET)
-	public void manage(HttpRequest request, ModelMap model) {
+	public void manage(ModelMap model) {
         model.addAttribute("user", Context.getAuthenticatedUser());
-        loggedInUsersCountCollectorThread = new LoggedInUsersCountCollectorThread();
-        Thread loginThread = new Thread(loggedInUsersCountCollectorThread);
-        loginThread.start();
+
         }
 
     @RequestMapping(value = "/module/systemmetrics/usedMemoryChart", method = RequestMethod.GET)
@@ -58,6 +59,25 @@ public class  SystemPerformanceandUtilizationManageController {
         String perMinDataToGraph = PerformanceMonitoringUtils.preparePerMinDataToGraph(perMinValueList);
         model.addAttribute("perMinValues", perMinDataToGraph);
 
+    }
+
+    @RequestMapping(value = "/module/systemmetrics/enable_tracking", method = RequestMethod.GET)
+    public void track(HttpServletRequest request) {
+        loggedInUsersCountCollectorThread = new LoggedInUsersCountCollectorThread(request.getSession());
+        Thread loginThread = new Thread(loggedInUsersCountCollectorThread);
+        loginThread.start();
+        System.out.println("started the tracker thread");
+
+    }
+
+    @RequestMapping(value = "/module/systemmetrics/loggedInUsers", method = RequestMethod.GET)
+    public void countLogins(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
+        // We get the memory data in the previous minute to display in the graph
+        List<LoginValue> valueList = service.getLoginValuesForChart(System.currentTimeMillis() - 300000, System.currentTimeMillis());
+        String dataToGraph = PerformanceMonitoringUtils.prepareLoginDataToGraph(valueList);
+        model.addAttribute("logInValues", dataToGraph);
 
     }
 }

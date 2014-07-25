@@ -14,7 +14,9 @@ public interface LoginValueDAO {
 
     public String getMetricTimestamp();
 
-    public LoginValue addLoginValue(LoginValue loginValue) ;
+    public LoginValue addLoginValue(LoginValue loginValue);
+
+    public LoginValue getAverageLoginValue(long startTimestamp, long endTimestamp);
 
     public void removeLoginValue(LoginValue loginValue);
 

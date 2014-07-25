@@ -6,20 +6,22 @@ import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 import org.openmrs.web.SessionListener;
 import org.openmrs.web.user.CurrentUsers;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoggedInUsersCountCollectorThread implements Runnable, HttpSessionListener {
+public class LoggedInUsersCountCollectorThread implements Runnable {
 
     private boolean start;
     LoginValue loginValue;
     List<String> currentUsers = new ArrayList<String>();
-
+    HttpSession session;
     PerformanceMonitoringService performanceMonitoringService;
 
-    public LoggedInUsersCountCollectorThread() {
+    public LoggedInUsersCountCollectorThread(HttpSession session) {
+        this.session=session;
         startLoggedInUsersCountCollectorThread();
     }
 
@@ -28,13 +30,15 @@ public class LoggedInUsersCountCollectorThread implements Runnable, HttpSessionL
         Context.openSession();
         performanceMonitoringService = Context.getService(PerformanceMonitoringService.class);
         while (start){
+            System.out.println("Called the tracker thread " + session.getId());
+            currentUsers = CurrentUsers.getCurrentUsernames(session);
             int userCount = currentUsers.size();
             loginValue = new LoginValue(System.currentTimeMillis(),3,userCount);
             performanceMonitoringService.addLoginValue(loginValue);
             try {
-                System.out.println("Users count - sleeping now " + userCount);
                 Thread.sleep(30000);
             } catch (InterruptedException e) {
+                stopLoggedInUsersCountCollectorThread();
                 /* ignore*/
             }
         }
@@ -53,14 +57,5 @@ public class LoggedInUsersCountCollectorThread implements Runnable, HttpSessionL
         start = false;
     }
 
-    @Override
-    public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-        currentUsers = CurrentUsers.getCurrentUsernames(httpSessionEvent.getSession());
-        System.out.println("User logged in " + currentUsers.size());
-    }
 
-    @Override
-    public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-        System.out.println("User logged out " + currentUsers.size());
-       }
 }

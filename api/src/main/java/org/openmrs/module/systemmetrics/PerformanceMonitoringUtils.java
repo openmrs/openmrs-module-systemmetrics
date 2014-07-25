@@ -17,7 +17,7 @@ public class PerformanceMonitoringUtils {
     public static PerMinuteUsedMemoryCollectorThread perMinuteUsedMemoryCollectorThread;
     public static UsedMemoryDeletionThread usedMemoryDeletionThread;
     public static PerMinuteUsedMemoryDeletionThread perMinuteUsedMemoryDeletionThread;
-    public static LoggedInUsersCountCollectorThread loggedInUsersCountCollectorThread;
+
     /**
      * Returns the PerformanceMonitoring service from the Context
      *
@@ -52,9 +52,7 @@ public class PerformanceMonitoringUtils {
         perMinuteUsedMemoryDeletionThread = new PerMinuteUsedMemoryDeletionThread();
         Thread perMinDeletorThread = new Thread(perMinuteUsedMemoryDeletionThread);
         perMinDeletorThread.start();
-        loggedInUsersCountCollectorThread = new LoggedInUsersCountCollectorThread();
-        Thread loginThread = new Thread(loggedInUsersCountCollectorThread);
-        loginThread.start();
+
 
     }
 
@@ -75,12 +73,29 @@ public class PerformanceMonitoringUtils {
         return fullEntry;
     }
 
+    /**
+     * Renders the metric values as [Date,LoginCount] value pairs and makes a javascript 2d array in order to be
+     * parsed to @loggedInUsers.jsp to draw the memory usage graph
+     * @param valueList
+     * @return
+     */
+    public static String prepareLoginDataToGraph(List<LoginValue> valueList) {
+
+        String fullEntry = "";
+        for(LoginValue loginValue : valueList){
+            // the final parsed array elements would be in format [new Date(1403842448), 5]  etc.
+            String oneEntry = "[new Date(" + (loginValue.getTimestamp()) + " ), " + loginValue.getLogin_count() + "],";
+            fullEntry = fullEntry + oneEntry;
+        }
+        return fullEntry;
+    }
+
     public static void stopCurrentlyRunningProcesses() {
         usedMemoryCollectorThread.stopUsedMemoryCollector();
         perMinuteUsedMemoryCollectorThread.stopPerMinMemoryCollector();
         usedMemoryDeletionThread.stopUsedMemoryDeletionThread();
         perMinuteUsedMemoryDeletionThread.stopPerminUsedMemoryDeletionThread();
-        loggedInUsersCountCollectorThread.stopLoggedInUsersCountCollectorThread();
+       // loggedInUsersCountCollectorThread.stopLoggedInUsersCountCollectorThread();
     }
 
     public static String preparePerMinDataToGraph(List<PerMinMetricValue> perMinValueList) {
