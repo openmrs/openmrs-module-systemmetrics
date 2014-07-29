@@ -16,10 +16,7 @@ package org.openmrs.module.systemmetrics.api.impl;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.module.systemmetrics.LoginValue;
-import org.openmrs.module.systemmetrics.MetricType;
-import org.openmrs.module.systemmetrics.MetricValue;
-import org.openmrs.module.systemmetrics.PerMinMetricValue;
+import org.openmrs.module.systemmetrics.*;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 import org.openmrs.module.systemmetrics.api.db.*;
 import org.openmrs.module.systemmetrics.api.db.hibernate.HibernateMetricTypeDAO;
@@ -38,6 +35,7 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
     private MetricValueDAO metricValueDAO;
     private PerMinMetricValueDAO perMinMetricValueDAO;
     private LoginValueDAO loginValueDAO;
+    private PerMinLoginValueDAO perMinLoginValueDAO;
 
     public void setPerformanceMonitoringDAO(PerformanceMonitoringDAO performanceMonitoringDAO) {
 	    this.performanceMonitoringDAO = performanceMonitoringDAO;
@@ -148,5 +146,15 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
     @Override
     public void removeLoginValuesWithinTime(long startTimestamp, long endTimestamp) {
         loginValueDAO.removeLoginValuesWithinTime(startTimestamp,endTimestamp);
+    }
+
+    @Override
+    public PerMinLoginValue getAverageLoginValue(long startTimestamp, long endTimestamp) {
+        return loginValueDAO.getAverageLoginValue(startTimestamp,endTimestamp);
+    }
+
+    @Override
+    public void addPerMinLoginValue(PerMinLoginValue perMinLoginValue) {
+        perMinLoginValueDAO.addPerMinLoginValue(perMinLoginValue);
     }
 }

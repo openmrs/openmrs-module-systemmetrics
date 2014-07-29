@@ -66,7 +66,6 @@ public class  SystemPerformanceandUtilizationManageController {
         loggedInUsersCountCollectorThread = new LoggedInUsersCountCollectorThread(request.getSession());
         Thread loginThread = new Thread(loggedInUsersCountCollectorThread);
         loginThread.start();
-        System.out.println("started the tracker thread");
 
     }
 

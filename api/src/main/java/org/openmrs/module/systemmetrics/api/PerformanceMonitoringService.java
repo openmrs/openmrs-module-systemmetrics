@@ -14,10 +14,7 @@
 package org.openmrs.module.systemmetrics.api;
 
 import org.openmrs.api.OpenmrsService;
-import org.openmrs.module.systemmetrics.LoginValue;
-import org.openmrs.module.systemmetrics.MetricType;
-import org.openmrs.module.systemmetrics.MetricValue;
-import org.openmrs.module.systemmetrics.PerMinMetricValue;
+import org.openmrs.module.systemmetrics.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -65,4 +62,7 @@ public interface PerformanceMonitoringService extends OpenmrsService {
 
     public void removeLoginValuesWithinTime(long startTimestamp, long endTimestamp);
 
+    public PerMinLoginValue getAverageLoginValue(long startTimestamp, long endTimestamp);
+
+    public void addPerMinLoginValue(PerMinLoginValue perMinLoginValue);
 }

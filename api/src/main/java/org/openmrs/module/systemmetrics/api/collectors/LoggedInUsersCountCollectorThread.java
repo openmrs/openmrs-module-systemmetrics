@@ -30,7 +30,6 @@ public class LoggedInUsersCountCollectorThread implements Runnable {
         Context.openSession();
         performanceMonitoringService = Context.getService(PerformanceMonitoringService.class);
         while (start){
-            System.out.println("Called the tracker thread " + session.getId());
             currentUsers = CurrentUsers.getCurrentUsernames(session);
             int userCount = currentUsers.size();
             loginValue = new LoginValue(System.currentTimeMillis(),3,userCount);

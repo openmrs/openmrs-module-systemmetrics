@@ -60,5 +60,18 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="system-metrics-5" author="milinda-ruk">
+        <createTable tableName="systemmetrics_permin_login_value">
+            <column name="timestamp" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="login_count" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
 </databaseChangeLog>
