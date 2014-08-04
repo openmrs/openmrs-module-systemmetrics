@@ -65,4 +65,8 @@ public interface PerformanceMonitoringService extends OpenmrsService {
     public PerMinLoginValue getAverageLoginValue(long startTimestamp, long endTimestamp);
 
     public void addPerMinLoginValue(PerMinLoginValue perMinLoginValue);
+
+    public List<PerMinLoginValue> getPerMinLoginValuesForChart(long startTimestamp, long endTimestamp);
+
+
 }

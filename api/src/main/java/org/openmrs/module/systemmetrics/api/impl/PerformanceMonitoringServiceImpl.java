@@ -78,6 +78,14 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
         this.loginValueDAO = loginValueDAO;
     }
 
+    public PerMinLoginValueDAO getPerMinLoginValueDAO() {
+        return perMinLoginValueDAO;
+    }
+
+    public void setPerMinLoginValueDAO(PerMinLoginValueDAO perMinLoginValueDAO) {
+        this.perMinLoginValueDAO = perMinLoginValueDAO;
+    }
+
     public MetricType addMetricType(MetricType metricType) {
         return metricTypeDAO.addMetricType(metricType);
     }
@@ -156,5 +164,10 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
     @Override
     public void addPerMinLoginValue(PerMinLoginValue perMinLoginValue) {
         perMinLoginValueDAO.addPerMinLoginValue(perMinLoginValue);
+    }
+
+    @Override
+    public List<PerMinLoginValue> getPerMinLoginValuesForChart(long startTimestamp, long endTimestamp) {
+        return perMinLoginValueDAO.getPerMinLoginValuesForChart(startTimestamp,endTimestamp);
     }
 }

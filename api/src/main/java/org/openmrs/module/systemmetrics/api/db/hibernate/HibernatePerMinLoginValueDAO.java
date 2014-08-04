@@ -1,5 +1,6 @@
 package org.openmrs.module.systemmetrics.api.db.hibernate;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.openmrs.module.systemmetrics.PerMinLoginValue;
 import org.openmrs.module.systemmetrics.api.db.PerMinLoginValueDAO;
@@ -43,7 +44,8 @@ public class HibernatePerMinLoginValueDAO implements PerMinLoginValueDAO {
 
     @Override
     public List<PerMinLoginValue> getPerMinLoginValuesForChart(long startTimestamp, long endTimestamp) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        Query query =  sessionFactory.getCurrentSession().createQuery("from PerMinLoginValue where timestamp > :startTimestamp and timestamp < :endTimestamp").setParameter("startTimestamp", startTimestamp).setParameter("endTimestamp", endTimestamp);
+        return query.list();
     }
 
     @Override

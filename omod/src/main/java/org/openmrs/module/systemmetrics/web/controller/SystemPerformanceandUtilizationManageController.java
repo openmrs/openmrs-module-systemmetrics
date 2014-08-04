@@ -16,10 +16,7 @@ package org.openmrs.module.systemmetrics.web.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.systemmetrics.LoginValue;
-import org.openmrs.module.systemmetrics.MetricValue;
-import org.openmrs.module.systemmetrics.PerMinMetricValue;
-import org.openmrs.module.systemmetrics.PerformanceMonitoringUtils;
+import org.openmrs.module.systemmetrics.*;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 import org.openmrs.module.systemmetrics.api.collectors.LoggedInUsersCountCollectorThread;
 import org.openmrs.web.user.CurrentUsers;
@@ -73,10 +70,14 @@ public class  SystemPerformanceandUtilizationManageController {
     public void countLogins(ModelMap model) {
         model.addAttribute("user", Context.getAuthenticatedUser());
         PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
-        // We get the memory data in the previous minute to display in the graph
+        // We get the login data in the previous 5 minute to display in the graph
         List<LoginValue> valueList = service.getLoginValuesForChart(System.currentTimeMillis() - 300000, System.currentTimeMillis());
         String dataToGraph = PerformanceMonitoringUtils.prepareLoginDataToGraph(valueList);
         model.addAttribute("logInValues", dataToGraph);
+        // We get the login data in the previous hour to display in the graph
+        List<PerMinLoginValue> hourlyValueList = service.getPerMinLoginValuesForChart(System.currentTimeMillis() - 3600000, System.currentTimeMillis());
+        String hourlyDataToGraph = PerformanceMonitoringUtils.prepareHourlyLoginDataToGraph(hourlyValueList);
+        model.addAttribute("perMinLogInValues", hourlyDataToGraph);
 
     }
 }
