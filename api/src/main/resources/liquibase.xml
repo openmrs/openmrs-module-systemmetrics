@@ -73,5 +73,28 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="system-metrics-6" author="milinda-ruk">
+        <createTable tableName="systemmetrics_forms_per_hour">
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="form_count" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="system-metrics-7" author="milinda-ruk">
+        <createTable tableName="systemmetrics_saved_encounter">
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
 </databaseChangeLog>

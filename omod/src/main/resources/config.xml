@@ -51,5 +51,9 @@
 	</messages>
 	<!-- /Internationalization -->
 
+    <advice>
+        <point>org.openmrs.api.EncounterService</point>
+        <class>org.openmrs.module.systemmetrics.api.advisors.EncounterCreationAfterAdvice</class>
+    </advice>
 </module>
 

@@ -80,4 +80,17 @@ public class  SystemPerformanceandUtilizationManageController {
         model.addAttribute("perMinLogInValues", hourlyDataToGraph);
 
     }
+
+    /*
+    * We get the encounter creation data in the previous 12 hours to display in the graph
+    */
+    @RequestMapping(value = "/module/systemmetrics/createdEncounters", method = RequestMethod.GET)
+    public void countEncounters(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
+        List<FormsPerHourEntry> valueList = service.getFormsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis());
+        String dataToGraph = PerformanceMonitoringUtils.prepareEncountersDataToGraph(valueList);
+        model.addAttribute("formCounts", dataToGraph);
+
+    }
 }

@@ -45,6 +45,20 @@
     </div>
     </div>
 
+    <div id="createdEncountersTable">
+    <b class="boxHeader"> Application Indicators : Created Encounters Count </b>
+    <div class="box">
+    <div>
+    <span><b> Created Encounters </b></span>
+    <span>
+    <a href="createdEncounters.form">
+    <input type="button" name="enc_button" id="enc__button" value="View Data Table & Chart" />
+    </a>
+    </span>
+    </div>
+    </div>
+    </div>
+
 <script>
     function disableButton(){
     <!-- Todo: Add a method to disable the button when its clicked once-->

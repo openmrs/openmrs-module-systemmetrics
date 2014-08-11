@@ -18,6 +18,9 @@ public class PerformanceMonitoringUtils {
     public static UsedMemoryDeletionThread usedMemoryDeletionThread;
     public static PerMinuteUsedMemoryDeletionThread perMinuteUsedMemoryDeletionThread;
     public static PerMinuteUserLoginsCollectorThread perMinuteUserLoginsCollectorThread;
+    public static FormsPerHourEntryCollectorThread formsPerHourEntryCollectorThread;
+    public static SavedEncounterEntriesDeletionThread savedEncounterEntriesDeletionThread;
+    public static LoggedInUsersDeletionThread loggedInUsersDeletionThread;
 
     /**
      * Returns the PerformanceMonitoring service from the Context
@@ -33,9 +36,13 @@ public class PerformanceMonitoringUtils {
         MetricType usedMem = getService().addMetricType(new MetricType(1, "Used Memory", "long"));
         MetricType freeMem = getService().addMetricType(new MetricType(2,"Free Memory", "long"));
         MetricType logins = getService().addMetricType(new MetricType(3,"Logged in Users", "int"));
+        MetricType createdEncounters = getService().addMetricType(new MetricType(4,"Encounters Created", "int"));
+        MetricType savedEncounter = getService().addMetricType(new MetricType(5,"Saved Encounter", "object"));
         currentMetrics.add(usedMem);
         currentMetrics.add(freeMem);
         currentMetrics.add(logins);
+        currentMetrics.add(createdEncounters);
+        currentMetrics.add(savedEncounter);
     }
 
     public static void startInitialProcesses(){
@@ -56,6 +63,15 @@ public class PerformanceMonitoringUtils {
         perMinuteUserLoginsCollectorThread = new PerMinuteUserLoginsCollectorThread();
         Thread perMinuteUserLoginsCollector = new Thread(perMinuteUserLoginsCollectorThread);
         perMinuteUserLoginsCollector.start();
+        formsPerHourEntryCollectorThread = new FormsPerHourEntryCollectorThread();
+        Thread formsCountCollector = new Thread(formsPerHourEntryCollectorThread);
+        formsCountCollector.start();
+        savedEncounterEntriesDeletionThread = new SavedEncounterEntriesDeletionThread();
+        Thread savedEncountersDeletor = new Thread(savedEncounterEntriesDeletionThread);
+        savedEncountersDeletor.start();
+        loggedInUsersDeletionThread = new LoggedInUsersDeletionThread();
+        Thread userLoginDeletor = new Thread(loggedInUsersDeletionThread);
+        userLoginDeletor.start();
 
     }
 
@@ -110,13 +126,32 @@ public class PerformanceMonitoringUtils {
         return fullEntry;
     }
 
+    /**
+     * Renders the metric values as [Date,Memory] value pairs and makes a javascript 2d array in order to be
+     * parsed to @chart.jsp to draw the memory usage graph
+     * @param valueList
+     * @return
+     */
+    public static String prepareEncountersDataToGraph(List<FormsPerHourEntry> valueList) {
+
+        String fullEntry = "";
+        for(FormsPerHourEntry metricValue : valueList){
+            // the final parsed array elements would be in format [new Date(1403842448), 636]  etc.
+            String oneEntry = "[new Date(" + (metricValue.getTimestamp()) + " ), " + (metricValue.getFormCount()) + "],";
+            fullEntry = fullEntry + oneEntry;
+        }
+        return fullEntry;
+    }
+
     public static void stopCurrentlyRunningProcesses() {
         usedMemoryCollectorThread.stopUsedMemoryCollector();
         perMinuteUsedMemoryCollectorThread.stopPerMinMemoryCollector();
         usedMemoryDeletionThread.stopUsedMemoryDeletionThread();
         perMinuteUsedMemoryDeletionThread.stopPerminUsedMemoryDeletionThread();
-       // loggedInUsersCountCollectorThread.stopLoggedInUsersCountCollectorThread();
         perMinuteUserLoginsCollectorThread.stopPerMinuteUserLoginsCollectorr();
+        formsPerHourEntryCollectorThread.stopFormCountCollectorThread();
+        savedEncounterEntriesDeletionThread.stopSavedEncounterEntriesDeletionThread();
+        loggedInUsersDeletionThread.stopLoggedInUsersDeletionThread();
     }
 
     public static String preparePerMinDataToGraph(List<PerMinMetricValue> perMinValueList) {

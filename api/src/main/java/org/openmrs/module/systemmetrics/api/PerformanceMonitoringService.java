@@ -68,5 +68,18 @@ public interface PerformanceMonitoringService extends OpenmrsService {
 
     public List<PerMinLoginValue> getPerMinLoginValuesForChart(long startTimestamp, long endTimestamp);
 
+    public FormsPerHourEntry addFormsPerHourEntry(FormsPerHourEntry formsPerHourEntry);
+
+    public List<FormsPerHourEntry> getFormsPerHourEntryForChart(long startTimestamp, long endTimestamp);
+
+    public int getCreatedEncounters(long startTimestamp, long endTimestamp);
+
+    public SavedEncounter addSavedEncounter(SavedEncounter savedEncounter);
+
+    public void removeSavedEncounter(SavedEncounter savedEncounter);
+
+    public void removeSavedEncountersWithinTime(long startTimestamp, long endTimestamp);
+
+
 
 }

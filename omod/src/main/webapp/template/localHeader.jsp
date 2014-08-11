@@ -9,11 +9,11 @@
 		<c:if test='<%= request.getRequestURI().contains("/manage") %>'>class="active"</c:if>>
 		<a
 		href="${pageContext.request.contextPath}/module/systemmetrics/manage.form"><spring:message
-				code="metrics.manage" /></a>
+				code="systemmetrics.manage" /></a>
 	</li>
 	
 	<!-- Add further links here -->
 </ul>
 <h2>
-	<spring:message code="metrics.title" />
+    System Performance and Utilization Module
 </h2>

@@ -20,6 +20,7 @@ import org.openmrs.module.systemmetrics.*;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 import org.openmrs.module.systemmetrics.api.db.*;
 import org.openmrs.module.systemmetrics.api.db.hibernate.HibernateMetricTypeDAO;
+import org.openmrs.module.systemmetrics.api.db.hibernate.HibernateSavedEncounterDAO;
 
 import java.util.List;
 
@@ -36,6 +37,24 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
     private PerMinMetricValueDAO perMinMetricValueDAO;
     private LoginValueDAO loginValueDAO;
     private PerMinLoginValueDAO perMinLoginValueDAO;
+    private FormsPerHourEntryDAO formsPerHourEntryDAO;
+    private SavedEncounterDAO savedEncounterDAO;
+
+    public SavedEncounterDAO getSavedEncounterDAO() {
+        return savedEncounterDAO;
+    }
+
+    public void setSavedEncounterDAO(SavedEncounterDAO savedEncounterDAO) {
+        this.savedEncounterDAO = savedEncounterDAO;
+    }
+
+    public FormsPerHourEntryDAO getFormsPerHourEntryDAO() {
+        return formsPerHourEntryDAO;
+    }
+
+    public void setFormsPerHourEntryDAO(FormsPerHourEntryDAO formsPerHourEntryDAO) {
+        this.formsPerHourEntryDAO = formsPerHourEntryDAO;
+    }
 
     public void setPerformanceMonitoringDAO(PerformanceMonitoringDAO performanceMonitoringDAO) {
 	    this.performanceMonitoringDAO = performanceMonitoringDAO;
@@ -169,5 +188,35 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
     @Override
     public List<PerMinLoginValue> getPerMinLoginValuesForChart(long startTimestamp, long endTimestamp) {
         return perMinLoginValueDAO.getPerMinLoginValuesForChart(startTimestamp,endTimestamp);
+    }
+
+    @Override
+    public FormsPerHourEntry addFormsPerHourEntry(FormsPerHourEntry formsPerHourEntry) {
+        return formsPerHourEntryDAO.addFormsPerHourEntry(formsPerHourEntry);
+    }
+
+    @Override
+    public List<FormsPerHourEntry> getFormsPerHourEntryForChart(long startTimestamp, long endTimestamp) {
+        return formsPerHourEntryDAO.getFormsPerHourEntryForChart(startTimestamp,endTimestamp);
+    }
+
+    @Override
+    public int getCreatedEncounters(long startTimestamp, long endTimestamp){
+        return formsPerHourEntryDAO.getCreatedEncounters(startTimestamp,endTimestamp);
+    }
+
+    @Override
+    public SavedEncounter addSavedEncounter(SavedEncounter savedEncounter) {
+        return savedEncounterDAO.addSavedEncounter(savedEncounter);
+    }
+
+    @Override
+    public void removeSavedEncounter(SavedEncounter savedEncounter) {
+        savedEncounterDAO.removeSavedEncounter(savedEncounter);
+    }
+
+    @Override
+    public void removeSavedEncountersWithinTime(long startTimestamp, long endTimestamp) {
+        savedEncounterDAO.removeSavedEncountersWithinTime(startTimestamp,endTimestamp);
     }
 }
