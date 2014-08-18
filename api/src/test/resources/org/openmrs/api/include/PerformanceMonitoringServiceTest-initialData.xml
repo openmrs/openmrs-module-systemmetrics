@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+<!-- Metrics Types Data-->
+    <systemmetrics_metric_type metric_id="10" metric_name="Test Metric Value" metric_type="long"/>
+    <systemmetrics_metric_type metric_id="11" metric_name="Test Login Value" metric_type="int"/>
+    <systemmetrics_metric_type metric_id="12" metric_name="Test Forms Count" metric_type="int"/>
+    <systemmetrics_metric_type metric_id="13" metric_name="Test Saved Encounter" metric_type="object"/>
+
+    <!--Metric Value Data-->
+    <systemmetrics_metric_value timestamp="1407471659619" metric_id="10" metric_value="12345678"/>
+
+<!--Permin Metric Value Data -->
+    <systemmetrics_permin_metric_value timestamp="1407471669619" metric_id="10" metric_value="56789012"/>
+
+<!--Log in value data-->
+    <systemmetrics_login_value timestamp="1407471659619" metric_id="11" login_count="5"/>
+
+<!--Permin login value data-->
+    <systemmetrics_permin_login_value timestamp="1407471669619" metric_id="11" login_count="3"/>
+
+<!--Forms per hours data-->
+    <systemmetrics_forms_per_hour timestamp="1407471659619" metric_id="12" form_count="20"/>
+
+<!--Saved Encounter data-->
+    <systemmetrics_saved_encounter timestamp="1407471659619" metric_id="13"/>
+</dataset>
