@@ -68,7 +68,7 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
         return metricTypeDAO;
     }
 
-    public void setMetricTypeDAO(HibernateMetricTypeDAO metricTypeDAO) {
+    public void setMetricTypeDAO(MetricTypeDAO metricTypeDAO) {
         this.metricTypeDAO = metricTypeDAO;
     }
 
