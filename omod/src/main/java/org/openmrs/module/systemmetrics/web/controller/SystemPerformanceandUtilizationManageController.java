@@ -19,14 +19,23 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.systemmetrics.*;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 import org.openmrs.module.systemmetrics.api.collectors.LoggedInUsersCountCollectorThread;
-import org.openmrs.web.user.CurrentUsers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.management.Attribute;
+import javax.management.AttributeList;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
+import javax.management.ReflectionException;
 import javax.servlet.http.HttpServletRequest;
+
+import java.lang.management.ManagementFactory;
 import java.util.List;
 
 /**
@@ -56,6 +65,11 @@ public class  SystemPerformanceandUtilizationManageController {
         String perMinDataToGraph = PerformanceMonitoringUtils.preparePerMinDataToGraph(perMinValueList);
         model.addAttribute("perMinValues", perMinDataToGraph);
 
+    }
+	
+	@RequestMapping(value = "/module/systemmetrics/usedCPUChart", method = RequestMethod.GET)
+	public void cpuChart(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
     }
 
     @RequestMapping(value = "/module/systemmetrics/enable_tracking", method = RequestMethod.GET)
@@ -93,4 +107,107 @@ public class  SystemPerformanceandUtilizationManageController {
         model.addAttribute("formCounts", dataToGraph);
 
     }
+	    /*
+     * CPU Usage of JVM
+     */
+	@RequestMapping(value = "/module/systemmetrics/cpu_usage_jvm", method = RequestMethod.GET)
+	public @ResponseBody double cpuUsageJVM(ModelMap model) throws MalformedObjectNameException, NullPointerException, InstanceNotFoundException, ReflectionException 
+	{	
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        
+	    MBeanServer mbs    = ManagementFactory.getPlatformMBeanServer();
+	    ObjectName name    = ObjectName.getInstance("java.lang:type=OperatingSystem");
+	    AttributeList list = mbs.getAttributes(name, new String[]{ "ProcessCpuLoad" });
+
+	    if (list.isEmpty())     return Double.NaN;
+
+	    Attribute att = (Attribute)list.get(0);
+	    Double value  = (Double)att.getValue();
+
+	    if (value.doubleValue() == -1.0)      return Double.NaN;  // usually takes a couple of seconds before we get real values
+
+	    return ((int)(value.doubleValue() * 1000) / 10.0);        // returns a percentage value with 1 decimal point precision
+	}
+    /*
+     * CPU Usage Total
+     */
+	@RequestMapping(value = "/module/systemmetrics/cpu_usage", method = RequestMethod.GET)
+	public @ResponseBody double cpuUsage(ModelMap model) throws MalformedObjectNameException, NullPointerException, InstanceNotFoundException, ReflectionException 
+	{	
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        com.sun.management.OperatingSystemMXBean operatingSystemMXBean = 
+		         (com.sun.management.OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
+	    return operatingSystemMXBean.getSystemCpuLoad();        // returns a percentage value with 1 decimal point precision
+	}
+    /* 
+     * Total number of processors or cores available to the JVM 
+     */
+	@RequestMapping(value = "/module/systemmetrics/processor_avail_jvm", method = RequestMethod.GET)
+	public @ResponseBody int processorAvailJVM(ModelMap model)
+	{	
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        return Runtime.getRuntime().availableProcessors();
+	}
+    /* 
+     * Maximum amount of memory the JVM will attempt to use
+     */
+	@RequestMapping(value = "/module/systemmetrics/memory_avail_jvm", method = RequestMethod.GET)
+	public @ResponseBody long memoryAvailJVM(ModelMap model)
+	{	
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        return Runtime.getRuntime().maxMemory();
+	}
+    /* 
+     * Maximum amount of memory the JVM will attempt to use
+     */
+	@RequestMapping(value = "/module/systemmetrics/memory_total_jvm", method = RequestMethod.GET)
+	public @ResponseBody long memoryTotalJVM(ModelMap model)
+	{	
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        return Runtime.getRuntime().totalMemory();
+	}
+    /* 
+     * Maximum amount of memory; RAM Size
+     */
+	@RequestMapping(value = "/module/systemmetrics/memory_total", method = RequestMethod.GET)
+	public @ResponseBody long memoryTotal(ModelMap model)
+	{	
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        com.sun.management.OperatingSystemMXBean operatingSystemMXBean = 
+		         (com.sun.management.OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
+        return operatingSystemMXBean.getTotalPhysicalMemorySize()/1024l;
+	}
+    /* 
+     * Maximum amount of Page memory; Page File Size
+     */
+	@RequestMapping(value = "/module/systemmetrics/memory_total_page", method = RequestMethod.GET)
+	public @ResponseBody long memoryTotalPage(ModelMap model)
+	{	
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        com.sun.management.OperatingSystemMXBean operatingSystemMXBean = 
+		         (com.sun.management.OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
+        return operatingSystemMXBean.getTotalSwapSpaceSize()/1024l;
+	}
+    /* 
+     * Free amount of Physical memory; Free RAM
+     */
+	@RequestMapping(value = "/module/systemmetrics/memory_free", method = RequestMethod.GET)
+	public @ResponseBody long memoryFree(ModelMap model)
+	{	
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        com.sun.management.OperatingSystemMXBean operatingSystemMXBean = 
+		         (com.sun.management.OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
+        return operatingSystemMXBean.getFreePhysicalMemorySize()/1024l;
+	}
+    /* 
+     * Free amount of Page memory; Free Page File Size
+     */
+	@RequestMapping(value = "/module/systemmetrics/memory_free_page", method = RequestMethod.GET)
+	public @ResponseBody long memoryFreePage(ModelMap model)
+	{	
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        com.sun.management.OperatingSystemMXBean operatingSystemMXBean = 
+		         (com.sun.management.OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
+        return operatingSystemMXBean.getFreeSwapSpaceSize()/1024l;
+	}
 }
