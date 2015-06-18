@@ -21,19 +21,33 @@
         <div class="tabcontents">
             <div id="view1">
 				<div>
-					<span><b> Used Memory(MB) </b></span>
 					<span>
 						<a href="usedMemoryChart.form">
-						<input type="button" name="chart_button" id="per_sec_chart_button" value="View Data Table & Chart" />
+						<input type="button" name="chart_button" id="per_sec_chart_button" value="View" />
 						</a>
 					</span>
+					<span><b> Used Memory(MB) </b></span>
 					<br>
-					<span><b> Used CPU </b></span>
 					<span>
 						<a href="usedCPUChart.form">
-						<input type="button" name="chart_button" id="per_sec_chart_button" value="View Data Table & Chart" />
+						<input type="button" name="chart_button" id="per_sec_chart_button" value="View" />
 						</a>
 					</span>
+					<span><b> Used CPU </b></span>
+					<br>
+					<span>
+						<a href="usedDiskChart.form">
+						<input type="button" name="chart_button" id="per_sec_chart_button" value="View" />
+						</a>
+					</span>
+					<span><b> Used Disk </b></span>
+					<br>
+					<span>
+						<a href="systemInfo.form">
+						<input type="button" name="chart_button" id="per_sec_chart_button" value="View" />
+						</a>
+					</span>
+					<span><b> System Information </b></span>
 				</div>
             </div>
             <div id="view2">
