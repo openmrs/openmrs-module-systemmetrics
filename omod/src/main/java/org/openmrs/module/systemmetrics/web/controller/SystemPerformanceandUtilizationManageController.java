@@ -36,6 +36,7 @@ import javax.management.ReflectionException;
 import javax.servlet.http.HttpServletRequest;
 
 import java.lang.management.ManagementFactory;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,7 +72,12 @@ public class  SystemPerformanceandUtilizationManageController {
 	public void cpuChart(ModelMap model) {
         model.addAttribute("user", Context.getAuthenticatedUser());
     }
-
+	
+	@RequestMapping(value = "/module/systemmetrics/usedDiskChart", method = RequestMethod.GET)
+	public void diskChart(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+    }
+	
     @RequestMapping(value = "/module/systemmetrics/enable_tracking", method = RequestMethod.GET)
     public void track(HttpServletRequest request) {
         loggedInUsersCountCollectorThread = new LoggedInUsersCountCollectorThread(request.getSession());
@@ -107,7 +113,7 @@ public class  SystemPerformanceandUtilizationManageController {
         model.addAttribute("formCounts", dataToGraph);
 
     }
-	    /*
+	 /*
      * CPU Usage of JVM
      */
 	@RequestMapping(value = "/module/systemmetrics/cpu_usage_jvm", method = RequestMethod.GET)
@@ -209,5 +215,23 @@ public class  SystemPerformanceandUtilizationManageController {
         com.sun.management.OperatingSystemMXBean operatingSystemMXBean = 
 		         (com.sun.management.OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
         return operatingSystemMXBean.getFreeSwapSpaceSize()/1024l;
+	}
+	    /* 
+     * Disk Usage
+     */
+	@RequestMapping(value = "/module/systemmetrics/disk_usage", method = RequestMethod.GET)
+	public @ResponseBody List<DiskParam> diskUsage(ModelMap model)
+	{	
+        model.addAttribute("user", Context.getAuthenticatedUser());
+	    /* Get a list of all filesystem roots on this system */
+	    java.io.File[] roots = java.io.File.listRoots();
+	    java.io.File root ;
+	    List<DiskParam> DiskParams = new ArrayList<DiskParam>();
+	    /* For each filesystem root, print some info */
+	    for (int i = 0; i<roots.length; i++ ) {
+	    root = roots[i];
+	    DiskParams.add(new DiskParam(root.getAbsolutePath(),root.getTotalSpace(),root.getFreeSpace(), root.getUsableSpace()));
+	    }       
+	    return DiskParams;
 	}
 }

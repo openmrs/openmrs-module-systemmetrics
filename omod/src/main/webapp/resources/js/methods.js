@@ -35,3 +35,20 @@
 	}); 
 	return cpu_usage_val;
  }
+ /*
+ * Get Disk Usage
+ */
+ var disk_usage_val = null;
+ function disk_usage(){  
+	$.ajax({  
+	    type : "GET",   
+	    url : "disk_usage.form",
+		data : {}, 
+	    success : function(diskUsage) {  
+			disk_usage_val = diskUsage;
+	    },  
+	    error : function(e) {  
+			disk_usage_val = null;	
+	   }  
+	}); 
+ }
