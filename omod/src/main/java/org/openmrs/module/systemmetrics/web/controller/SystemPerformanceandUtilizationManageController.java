@@ -78,6 +78,11 @@ public class  SystemPerformanceandUtilizationManageController {
         model.addAttribute("user", Context.getAuthenticatedUser());
     }
 	
+	@RequestMapping(value = "/module/systemmetrics/systemInfo", method = RequestMethod.GET)
+	public void systemInfo(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+    }
+	
     @RequestMapping(value = "/module/systemmetrics/enable_tracking", method = RequestMethod.GET)
     public void track(HttpServletRequest request) {
         loggedInUsersCountCollectorThread = new LoggedInUsersCountCollectorThread(request.getSession());
@@ -154,6 +159,15 @@ public class  SystemPerformanceandUtilizationManageController {
         model.addAttribute("user", Context.getAuthenticatedUser());
         return Runtime.getRuntime().availableProcessors();
 	}
+	/* 
+     * Total amount of free memory available to the JVM
+     */
+	@RequestMapping(value = "/module/systemmetrics/memory_free_jvm", method = RequestMethod.GET)
+	public @ResponseBody long memoryFreeJVM(ModelMap model)
+	{	
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        return Runtime.getRuntime().freeMemory();
+	}
     /* 
      * Maximum amount of memory the JVM will attempt to use
      */
@@ -181,7 +195,7 @@ public class  SystemPerformanceandUtilizationManageController {
         model.addAttribute("user", Context.getAuthenticatedUser());
         com.sun.management.OperatingSystemMXBean operatingSystemMXBean = 
 		         (com.sun.management.OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
-        return operatingSystemMXBean.getTotalPhysicalMemorySize()/1024l;
+        return operatingSystemMXBean.getTotalPhysicalMemorySize();
 	}
     /* 
      * Maximum amount of Page memory; Page File Size
@@ -192,7 +206,7 @@ public class  SystemPerformanceandUtilizationManageController {
         model.addAttribute("user", Context.getAuthenticatedUser());
         com.sun.management.OperatingSystemMXBean operatingSystemMXBean = 
 		         (com.sun.management.OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
-        return operatingSystemMXBean.getTotalSwapSpaceSize()/1024l;
+        return operatingSystemMXBean.getTotalSwapSpaceSize();
 	}
     /* 
      * Free amount of Physical memory; Free RAM
@@ -203,7 +217,7 @@ public class  SystemPerformanceandUtilizationManageController {
         model.addAttribute("user", Context.getAuthenticatedUser());
         com.sun.management.OperatingSystemMXBean operatingSystemMXBean = 
 		         (com.sun.management.OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
-        return operatingSystemMXBean.getFreePhysicalMemorySize()/1024l;
+        return operatingSystemMXBean.getFreePhysicalMemorySize();
 	}
     /* 
      * Free amount of Page memory; Free Page File Size
@@ -214,9 +228,9 @@ public class  SystemPerformanceandUtilizationManageController {
         model.addAttribute("user", Context.getAuthenticatedUser());
         com.sun.management.OperatingSystemMXBean operatingSystemMXBean = 
 		         (com.sun.management.OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
-        return operatingSystemMXBean.getFreeSwapSpaceSize()/1024l;
+        return operatingSystemMXBean.getFreeSwapSpaceSize();
 	}
-	    /* 
+	 /* 
      * Disk Usage
      */
 	@RequestMapping(value = "/module/systemmetrics/disk_usage", method = RequestMethod.GET)
@@ -233,5 +247,71 @@ public class  SystemPerformanceandUtilizationManageController {
 	    DiskParams.add(new DiskParam(root.getAbsolutePath(),root.getTotalSpace(),root.getFreeSpace(), root.getUsableSpace()));
 	    }       
 	    return DiskParams;
+	}
+	 /* 
+     * Operating System Version
+     */
+	@RequestMapping(value = "/module/systemmetrics/get_version", method = RequestMethod.GET)
+	public @ResponseBody String getVersion(ModelMap model)
+	{	
+		model.addAttribute("user", Context.getAuthenticatedUser());
+		java.lang.management.OperatingSystemMXBean operatingSystemMXBean = 
+		         ManagementFactory.getOperatingSystemMXBean();
+        return 	operatingSystemMXBean.getVersion();
+	}
+	 /* 
+     * OS Architecture
+     */
+	@RequestMapping(value = "/module/systemmetrics/get_arch", method = RequestMethod.GET)
+	public @ResponseBody  String getArch(ModelMap model)
+	{	
+		model.addAttribute("user", Context.getAuthenticatedUser());
+		java.lang.management.OperatingSystemMXBean operatingSystemMXBean = 
+		         ManagementFactory.getOperatingSystemMXBean();
+        return 	operatingSystemMXBean.getArch();
+	}
+	 /* 
+     * OS Name
+     */
+	@RequestMapping(value = "/module/systemmetrics/get_name", method = RequestMethod.GET)
+	public @ResponseBody String getName(ModelMap model)
+	{	
+		model.addAttribute("user", Context.getAuthenticatedUser());
+		java.lang.management.OperatingSystemMXBean operatingSystemMXBean = 
+		         ManagementFactory.getOperatingSystemMXBean();
+        return 	operatingSystemMXBean.getName();
+	}
+	 /* 
+     * JVM Name
+     */
+	@RequestMapping(value = "/module/systemmetrics/get_name_jvm", method = RequestMethod.GET)
+	public @ResponseBody  String getNameJVM(ModelMap model)
+	{	
+		model.addAttribute("user", Context.getAuthenticatedUser());
+		java.lang.management.RuntimeMXBean runtimeMXBean = 
+		         ManagementFactory.getRuntimeMXBean();
+        return 	runtimeMXBean.getVmName();
+	}
+	 /* 
+     * JVM Version
+     */
+	@RequestMapping(value = "/module/systemmetrics/get_version_jvm", method = RequestMethod.GET)
+	public @ResponseBody String getNameJVMVersion(ModelMap model)
+	{	
+		model.addAttribute("user", Context.getAuthenticatedUser());
+		java.lang.management.RuntimeMXBean runtimeMXBean = 
+		         ManagementFactory.getRuntimeMXBean();
+        return 	runtimeMXBean.getVmVersion();
+	}
+	 /* 
+     * JVM Vendor Name
+     */
+	@RequestMapping(value = "/module/systemmetrics/get_vendor_jvm", method = RequestMethod.GET)
+	public @ResponseBody String getNameJVMVendor(ModelMap model)
+	{	
+		model.addAttribute("user", Context.getAuthenticatedUser());
+		java.lang.management.RuntimeMXBean runtimeMXBean = 
+		         ManagementFactory.getRuntimeMXBean();
+        return 	runtimeMXBean.getVmVendor();
 	}
 }
