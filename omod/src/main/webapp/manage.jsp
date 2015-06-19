@@ -6,6 +6,7 @@
 <!-- Tell 1.7+ versions of core to not include JQuery themselves. Also, on 1.7+ we may get different jquery and jquery-ui versions than 1.3.2 and 1.7.2 -->
 <c:set var="DO_NOT_INCLUDE_JQUERY" value="true"/>
 
+<openmrs:htmlInclude file="/moduleResources/systemmetrics/css/styles.css"/>
 <openmrs:htmlInclude file="/moduleResources/systemmetrics/js/lib/jquery/jquery.min.js" />
 <openmrs:htmlInclude file="/moduleResources/systemmetrics/js/methods.js" />
 
@@ -23,28 +24,28 @@
 				<div>
 					<span>
 						<a href="usedMemoryChart.form">
-						<input type="button" name="chart_button" id="per_sec_chart_button" value="View" />
+						<input type="button" name="chart_button" id="per_sec_chart_button" value="View" class="view_indicator"/>
 						</a>
 					</span>
 					<span><b> Used Memory(MB) </b></span>
 					<br>
 					<span>
 						<a href="usedCPUChart.form">
-						<input type="button" name="chart_button" id="per_sec_chart_button" value="View" />
+						<input type="button" name="chart_button" id="per_sec_chart_button" value="View" class="view_indicator"/>
 						</a>
 					</span>
 					<span><b> Used CPU </b></span>
 					<br>
 					<span>
 						<a href="usedDiskChart.form">
-						<input type="button" name="chart_button" id="per_sec_chart_button" value="View" />
+						<input type="button" name="chart_button" id="per_sec_chart_button" value="View" class="view_indicator"/>
 						</a>
 					</span>
 					<span><b> Used Disk </b></span>
 					<br>
 					<span>
 						<a href="systemInfo.form">
-						<input type="button" name="chart_button" id="per_sec_chart_button" value="View" />
+						<input type="button" name="chart_button" id="per_sec_chart_button" value="View" class="view_indicator"/>
 						</a>
 					</span>
 					<span><b> System Information </b></span>
@@ -52,30 +53,30 @@
             </div>
             <div id="view2">
 				<div>
-					<span><b> User Logins </b></span>
 					<span>
 						<a href="loggedInUsers.form">
-						<input type="button" name="logins_button" id="user_login_chart_button" value="View Data Table & Chart" />
+						<input type="button" name="logins_button" id="user_login_chart_button" value="View" class="view_indicator"/>
 						</a>
 					</span>
+					<span><b> User Logins </b></span>
 				</div>
 				<div>
-					<span><b> Created Encounters </b></span>
 					<span>
 						<a href="createdEncounters.form">
-						<input type="button" name="enc_button" id="enc__button" value="View Data Table & Chart" />
+						<input type="button" name="enc_button" id="enc__button" value="View" class="view_indicator"/>
 						</a>
 					</span>
+					<span><b> Created Encounters </b></span>
 				</div>
             </div>
             <div id="view3">
 				<div>
-					<span><b> Enable User Login </b></span>
 					<span>
 						<a href="enable_tracking.form">
-						<input type="button" name="track_button" id="track_button" value="Yes" onclick="disableButton"/>
+						<input type="button" name="track_button" id="track_button" value="Yes" onclick="disableButton" class="view_indicator"/>
 						</a>
 					</span>
+					<span><b> Enable User Login </b></span>
 				</div>
             </div>
         </div>
