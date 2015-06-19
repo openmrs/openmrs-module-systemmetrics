@@ -16,11 +16,14 @@
       
 	  setInterval(function() {
         cpuData.append(new Date().getTime(), cpu_usage() * 100);
-		document.getElementById('cpu_head').innerHTML = 'CPU Usage : '+Math.round(cpu_usage_val*100)+'%';
+		document.getElementById('cpu_head').innerHTML = ' : '+Math.round(cpu_usage_val*100)+'%';
 		jvmData.append(new Date().getTime(), cpu_usage_jvm());
-		document.getElementById('jvm_head').innerHTML = 'CPU Usage JVM: '+Math.round(cpu_usage_jvm_val)+'%';
+		document.getElementById('jvm_head').innerHTML = ' : '+Math.round(cpu_usage_jvm_val)+'%';
       }, 500);
-      
+      function resize_canvas_set(){
+		resize_canvas("cpu_chart_jvm","cpu_stat_info");
+		resize_canvas("cpu_chart","cpu_jvm_stat_info");
+	  }
       function createTimeline() {
 		var chartCPU = new SmoothieChart({millisPerPixel:45}),
 		chartJVM = new SmoothieChart({millisPerPixel:45}),
@@ -35,11 +38,28 @@
     </script>
 
   <body onload="createTimeline()">
-	<b id='cpu_head'>CPU Usage</b><br>
-    <canvas id="cpu_chart" width="720" height="200"></canvas><br>
-	<b id='jvm_head'>CPU Usage JVM</b><br>
-	<canvas id="cpu_chart_jvm" width="720" height="200"></canvas>
-
+  	<div class="info_head" style="border:1px solid  #009D8E;">
+	 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;">
+  			<input id='cpu_stat_head' type="button" style="background: #009D8E;" value="-" onclick="hidePanel('cpu_stat_head','cpu_stat_info');"/>
+			<font color="#ffffff" size="4pt">
+				<b><spring:message code="systemmetrics.cpuusage.total"/></b><b id='cpu_head'></b><br>
+			</font>
+		</div>
+		<div id='cpu_stat_info' align="center">
+			<canvas id="cpu_chart" height="200" width="800"></canvas><br>
+  		</div>
+	</div>
+  	<div class="info_head" style="border:1px solid  #009D8E;">
+	 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;">
+  			<input id='cpu_jvm_stat_head' type="button" style="background: #009D8E;" value="-" onclick="hidePanel('cpu_jvm_stat_head','cpu_jvm_stat_info');"/>
+			<font color="#ffffff" size="4pt">
+				<b><spring:message code="systemmetrics.cpuusage.jvm"/></b><b id='jvm_head'></b><br>
+			</font>
+		</div>
+		<div id='cpu_jvm_stat_info'  align="center">
+			<canvas id="cpu_chart_jvm" height="200" width="800"></canvas>
+  		</div>
+	</div>
   </body>
 	
 <%@ include file="/WEB-INF/template/footer.jsp"%>

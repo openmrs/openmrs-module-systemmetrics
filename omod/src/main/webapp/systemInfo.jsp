@@ -14,8 +14,10 @@
       var dataRAM = new TimeSeries();
       
 	  setInterval(function() {
-        dataRAM.append(new Date().getTime(), memory_free()* 100/memory_total() );
-		document.getElementById('ram_head').innerHTML = ' : '+Math.round(memory_free_val*100/memory_total_val)+'%';
+		memory_total_jvm();
+		memory_free_jvm();
+        dataRAM.append(new Date().getTime(), (memory_total_jvm_val-memory_free_jvm_val)* 100/memory_total_jvm_val );
+		document.getElementById('ram_head').innerHTML = ' : '+Math.round((memory_total_jvm_val-memory_free_jvm_val)*100/memory_total_jvm_val)+'%';
       }, 500);
       function setOSName(val){
 		document.getElementById('os_name').innerHTML = val;
@@ -39,25 +41,28 @@
 		document.getElementById('processor_count').innerHTML = val;
 	  }
 	  function setMemFree(val){
-		document.getElementById('memory_free').innerHTML = val;
+		document.getElementById('memory_free').innerHTML = val+" bytes";
 	  }
 	  function setMemTotal(val){
-		document.getElementById('memory_total').innerHTML = val;
+		document.getElementById('memory_total').innerHTML = val+" bytes";
 	  }
 	  function setPageFree(val){
-		document.getElementById('page_free').innerHTML = val;
+		document.getElementById('page_free').innerHTML = val+" bytes";
 	  }
 	  function setPageTotal(val){
-		document.getElementById('page_total').innerHTML = val;
+		document.getElementById('page_total').innerHTML = val+" bytes";
 	  }
 	  function setJVMMemFree(val){
-		document.getElementById('jvm_memory_free').innerHTML = val;
+		document.getElementById('jvm_memory_free').innerHTML = val+" bytes";
 	  }
 	  function setJVMMemTotal(val){
-		document.getElementById('jvm_memory_total').innerHTML = val;
+		document.getElementById('jvm_memory_total').innerHTML = val+" bytes";
 	  }
 	  function setJVMMemMax(val){
-		document.getElementById('jvm_memory_max').innerHTML = val;
+		document.getElementById('jvm_memory_max').innerHTML = val+" bytes";
+	  }
+	  function resize_canvas_set(){
+		resize_canvas("ram_chart","jvm_stat_info");
 	  }
       function createTimeline() {
 		var chartRAM = new SmoothieChart({millisPerPixel:45}),
@@ -83,41 +88,103 @@
     </script>
 
   <body onload="createTimeline()">
-    <h2><spring:message code="systemmetrics.systeminfo.os.info"/></h2>
-	<p>
-  	<b><spring:message code="systemmetrics.systeminfo.os.name"/> : </b><b id='os_name'></b><br>
-	<b><spring:message code="systemmetrics.systeminfo.os.arch"/> : </b><b id='os_arch'></b><br>
-	<b><spring:message code="systemmetrics.systeminfo.os.version"/> : </b><b id='os_ver'></b><br>
-	</p>
-	<h2><spring:message code="systemmetrics.systeminfo.jvm.info"/></h2>
-	<p>
-	<b><spring:message code="systemmetrics.systeminfo.jvm.name"/> : </b><b id='jvm_name'></b><br>
-	<b><spring:message code="systemmetrics.systeminfo.jvm.vendor"/> : </b><b id='jvm_vendor'></b><br>
-	<b><spring:message code="systemmetrics.systeminfo.os.version"/> : </b><b id='jvm_ver'></b><br>
-	</p>
-	<h2><spring:message code="systemmetrics.systeminfo.processor"/></h2>
-	<p>
-	<b><spring:message code="systemmetrics.systeminfo.processor.count"/> : </b><b id='processor_count'></b><br>
-	</p>
-	<h2><spring:message code="systemmetrics.systeminfo.memory.main"/></h2>
-	<p>
-	<b><spring:message code="systemmetrics.systeminfo.memory.free"/> : </b><b id='memory_free'></b><br>
-	<b><spring:message code="systemmetrics.systeminfo.memory.total"/> : </b><b id='memory_total'></b><br>
-	</p>
-	<h2><spring:message code="systemmetrics.systeminfo.memory.page"/></h2>
-	<p>
-	<b><spring:message code="systemmetrics.systeminfo.memory.free"/> : </b><b id='page_free'></b><br>
-	<b><spring:message code="systemmetrics.systeminfo.memory.total"/> : </b><b id='page_total'></b><br>
-	</p>
-	<h2><spring:message code="systemmetrics.systeminfo.memory.jvm"/></h2>
-	<p>
-	<b><spring:message code="systemmetrics.systeminfo.memory.free"/> : </b><b id='jvm_memory_free'></b><br>
-	<b><spring:message code="systemmetrics.systeminfo.memory.total"/> : </b><b id='jvm_memory_total'></b><br>
-	<b><spring:message code="systemmetrics.systeminfo.memory.jvm.max"/> : </b><b id='jvm_memory_max'></b><br>
-	</p>
-	<b><spring:message code="systemmetrics.memoryusage.total"/></b><b id='ram_head'></b><br>
-    <canvas id="ram_chart" width="720" height="200"></canvas><br>
-
+   <div class="info_head" style="border:1px solid  #009D8E;">
+	 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;">
+  			<input id='os_head' type="button" style="background: #009D8E;" value="-" onclick="hidePanel('os_head','os_info');"/>
+			<font color="#ffffff" size="4pt">
+				<b><spring:message code="systemmetrics.systeminfo.os.info"/></b>
+			</font>
+		</div>
+		<div id='os_info'>
+			<p>
+			<b><spring:message code="systemmetrics.systeminfo.os.name"/> : </b><b id='os_name'></b><br>
+			<b><spring:message code="systemmetrics.systeminfo.os.arch"/> : </b><b id='os_arch'></b><br>
+			<b><spring:message code="systemmetrics.systeminfo.os.version"/> : </b><b id='os_ver'></b><br>
+			</p>
+  		</div>
+	</div>
+	<div class="info_head" style="border:1px solid  #009D8E;">
+	 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;">
+  			<input id='jvm_head' type="button" style="background: #009D8E;" value="-" onclick="hidePanel('jvm_head','jvm_info');"/>
+			<font color="#ffffff" size="4pt">
+				<b><spring:message code="systemmetrics.systeminfo.jvm.info"/></b>
+			</font>
+		</div>
+		<div id='jvm_info'>
+			<p>
+			<b><spring:message code="systemmetrics.systeminfo.jvm.name"/> : </b><b id='jvm_name'></b><br>
+			<b><spring:message code="systemmetrics.systeminfo.jvm.vendor"/> : </b><b id='jvm_vendor'></b><br>
+			<b><spring:message code="systemmetrics.systeminfo.os.version"/> : </b><b id='jvm_ver'></b><br>
+			</p>
+  		</div>
+	</div>
+	<div class="info_head" style="border:1px solid  #009D8E;">
+	 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;">
+  			<input id='process_head' type="button" style="background: #009D8E;" value="-" onclick="hidePanel('process_head','process_info');"/>
+			<font color="#ffffff" size="4pt">
+				<b><spring:message code="systemmetrics.systeminfo.processor"/></b>
+			</font>
+		</div>
+		<div id='process_info'>
+			<p>
+			<b><spring:message code="systemmetrics.systeminfo.processor.count"/> : </b><b id='processor_count'></b><br>
+			</p>
+  		</div>
+	</div>
+	<div class="info_head" style="border:1px solid  #009D8E;">
+	 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;">
+  			<input id='memory_head' type="button" style="background: #009D8E;" value="-" onclick="hidePanel('memory_head','memory_info');"/>
+			<font color="#ffffff" size="4pt">
+				<b><spring:message code="systemmetrics.systeminfo.memory.main"/></b>
+			</font>
+		</div>
+		<div id='memory_info'>
+			<p>
+			<b><spring:message code="systemmetrics.systeminfo.memory.free"/> : </b><b id='memory_free'></b><br>
+			<b><spring:message code="systemmetrics.systeminfo.memory.total"/> : </b><b id='memory_total'></b><br>
+			</p>
+  		</div>
+	</div>
+	<div class="info_head" style="border:1px solid  #009D8E;">
+	 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;">
+  			<input id='page_head' type="button" style="background: #009D8E;" value="-" onclick="hidePanel('page_head','page_info');"/>
+			<font color="#ffffff" size="4pt">
+				<b><spring:message code="systemmetrics.systeminfo.memory.page"/></b>
+			</font>
+		</div>
+		<div id='page_info'>
+			<p>
+				<b><spring:message code="systemmetrics.systeminfo.memory.free"/> : </b><b id='page_free'></b><br>
+				<b><spring:message code="systemmetrics.systeminfo.memory.total"/> : </b><b id='page_total'></b><br>
+			</p>
+  		</div>
+	</div>
+	<div class="info_head" style="border:1px solid  #009D8E;">
+	 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;">
+  			<input id='jvm_head' type="button" style="background: #009D8E;" value="-" onclick="hidePanel('jvm_head','jvm_info');"/>
+			<font color="#ffffff" size="4pt">
+				<b><spring:message code="systemmetrics.systeminfo.memory.jvm"/></b>
+			</font>
+		</div>
+		<div id='jvm_info'>
+			<p>
+			<b><spring:message code="systemmetrics.systeminfo.memory.free"/> : </b><b id='jvm_memory_free'></b><br>
+			<b><spring:message code="systemmetrics.systeminfo.memory.total"/> : </b><b id='jvm_memory_total'></b><br>
+			<b><spring:message code="systemmetrics.systeminfo.memory.jvm.max"/> : </b><b id='jvm_memory_max'></b><br>
+			</p>
+  		</div>
+	</div>
+	<div class="info_head" style="border:1px solid  #009D8E;">
+	 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;">
+  			<input id='jvm_stat_head' type="button" style="background: #009D8E;" value="-" onclick="hidePanel('jvm_stat_head','jvm_stat_info');"/>
+			<font color="#ffffff" size="4pt">
+				<b><spring:message code="systemmetrics.memoryusage.total"/></b><b id='ram_head'></b><br>
+			</font>
+		</div>
+		<div id='jvm_stat_info' align="center">
+			<canvas id="ram_chart" height="200" width="800"></canvas><br>
+  		</div>
+	</div>
   </body>
 	
 <%@ include file="/WEB-INF/template/footer.jsp"%>
