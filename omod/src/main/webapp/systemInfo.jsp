@@ -13,12 +13,22 @@
 	<script type="text/javascript">
       var dataRAM = new TimeSeries();
       
-	  setInterval(function() {
-		memory_total_jvm();
-		memory_free_jvm();
-        dataRAM.append(new Date().getTime(), (memory_total_jvm_val-memory_free_jvm_val)* 100/memory_total_jvm_val );
+	  var memory_total_jvm_val,memory_free_jvm_val;
+	  function getTotalJVM(val){
+		memory_total_jvm_val = val;
+	  }
+	  function getFreeJVM(val){
+		memory_free_jvm_val = val;
+	  }
+	  function updateMemoryChart() {
+        dataRAM.append(new Date().getTime(), (memory_total_jvm_val-memory_free_jvm_val)* 100/memory_total_jvm_val);
 		document.getElementById('ram_head').innerHTML = ' : '+Math.round((memory_total_jvm_val-memory_free_jvm_val)*100/memory_total_jvm_val)+'%';
-      }, 500);
+      }
+	  setInterval(function(){
+		indicatorCall("memory_total_jvm",getTotalJVM);
+		indicatorCall("memory_free_jvm",getFreeJVM);	
+		updateMemoryChart();
+	  }, 1000);
       function setOSName(val){
 		document.getElementById('os_name').innerHTML = val;
 	  }
@@ -105,12 +115,12 @@
 	</div>
 	<div class="info_head" style="border:1px solid  #009D8E;">
 	 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;">
-  			<input id='jvm_head' type="button" style="background: #009D8E;" value="-" onclick="hidePanel('jvm_head','jvm_info');"/>
+  			<input id='vm_head' type="button" style="background: #009D8E;" value="-" onclick="hidePanel('vm_head','vm_info');"/>
 			<font color="#ffffff" size="4pt">
 				<b><spring:message code="systemmetrics.systeminfo.jvm.info"/></b>
 			</font>
 		</div>
-		<div id='jvm_info'>
+		<div id='vm_info'>
 			<p>
 			<b><spring:message code="systemmetrics.systeminfo.jvm.name"/> : </b><b id='jvm_name'></b><br>
 			<b><spring:message code="systemmetrics.systeminfo.jvm.vendor"/> : </b><b id='jvm_vendor'></b><br>

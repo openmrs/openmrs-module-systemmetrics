@@ -16,6 +16,10 @@
 	* Update Disk Usage Table
 	*/
 	var size = 0; // size stands for data size {Bytes, KB, MB, GB} 
+	var disk_usage_val;
+	function getDiskUsage(val){
+		disk_usage_val = val;
+	}
 	function updateTable(){
 		var disk_table = document.getElementById('disk_usage_data');
 		disk_table.innerHTML = "";
@@ -28,26 +32,17 @@
 			disk_table.innerHTML += disk_td;
 		}	
 	}
-	/*
-	* Setup Time Interval for receiving Disk Usage data
-	*/
-	setTimeout(function(){
-		setInterval(function() {
-			if(disk_usage_val){
-				updateTable();
-			}
-		}, 10000);
-	},2000);
-	  setInterval(disk_usage, 3000);
+
+	 setInterval(function(){indicatorCall("disk_usage",getDiskUsage);	updateTable();}, 1000);
 	  
-	  function setDataSize(){
-			size = $('input[name="size"]:checked').val();
-			updateTable();
-	  }
+	 function setDataSize(){
+		size = $('input[name="size"]:checked').val();
+		updateTable();
+	 }
 
 	</script>
 
-	<body onload="disk_usage();">
+	<body>
 		<div  align="center">
 		<input type="radio" name="size" value="0" onclick="setDataSize();"/> <spring:message code="systemmetrics.datasize.bytes"/>
 		<input type="radio" name="size" value="1" onclick="setDataSize();"/><spring:message code="systemmetrics.datasize.kb"/>

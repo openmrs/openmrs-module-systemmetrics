@@ -14,11 +14,26 @@
       var cpuData = new TimeSeries(),
 		  jvmData = new TimeSeries();
       
-	  setInterval(function() {
-        cpuData.append(new Date().getTime(), cpu_usage() * 100);
+	  var cpu_usage_val,cpu_usage_jvm_val;
+	  function getCPU(val){
+		cpu_usage_val = val;
+	  }
+	  function getCPUJVM(val){
+		cpu_usage_jvm_val= val;
+	  }
+	  function updateCPUChart() {
+        cpuData.append(new Date().getTime(), cpu_usage_val * 100);
 		document.getElementById('cpu_head').innerHTML = ' : '+Math.round(cpu_usage_val*100)+'%';
-		jvmData.append(new Date().getTime(), cpu_usage_jvm());
+		jvmData.append(new Date().getTime(), cpu_usage_jvm_val);
 		document.getElementById('jvm_head').innerHTML = ' : '+Math.round(cpu_usage_jvm_val)+'%';
+      }
+	  setInterval(function(){
+		indicatorCall("cpu_usage",getCPU);
+		indicatorCall("cpu_usage_jvm",getCPUJVM);	
+		updateCPUChart();
+	  }, 1000);
+	  setInterval(function() {
+
       }, 500);
       function resize_canvas_set(){
 		resize_canvas("cpu_chart_jvm","cpu_stat_info");

@@ -68,6 +68,26 @@ public class  SystemPerformanceandUtilizationManageController {
 
     }
 	
+    @RequestMapping(value = "/module/systemmetrics/usedMemoryPerMin", method = RequestMethod.GET)
+    public @ResponseBody String chartMemoryPerMin(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
+        List<PerMinMetricValue> perMinValueList = service.getPerMinMetricValuesForChart(System.currentTimeMillis() - 1200000, System.currentTimeMillis());
+        String perMinDataToGraph = PerformanceMonitoringUtils.preparePerMinDataToGraph(perMinValueList);
+        return perMinDataToGraph;
+
+    }
+    
+    @RequestMapping(value = "/module/systemmetrics/usedMemory", method = RequestMethod.GET)
+    public @ResponseBody String chartMemory(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
+        // We get the memory data in the previous minute to display in the graph
+        List<MetricValue> valueList = service.getMetricValuesForChart(System.currentTimeMillis()-120000,System.currentTimeMillis());
+        String dataToGraph = PerformanceMonitoringUtils.prepareDataToGraph(valueList);
+        return dataToGraph;
+    }
+    
 	@RequestMapping(value = "/module/systemmetrics/usedCPUChart", method = RequestMethod.GET)
 	public void cpuChart(ModelMap model) {
         model.addAttribute("user", Context.getAuthenticatedUser());
