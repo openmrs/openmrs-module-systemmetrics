@@ -18,8 +18,12 @@ public class PerformanceMonitoringUtils {
     public static UsedMemoryDeletionThread usedMemoryDeletionThread;
     public static PerMinuteUsedMemoryDeletionThread perMinuteUsedMemoryDeletionThread;
     public static PerMinuteUserLoginsCollectorThread perMinuteUserLoginsCollectorThread;
-    public static FormsPerHourEntryCollectorThread formsPerHourEntryCollectorThread;
+    public static PatientsPerHourEntryCollectorThread patientPerHourEntryCollectorThread;
+    public static SavedPatientEntriesDeletionThread savedPatientEntriesDeletionThread;
+	public static EncountersPerHourEntryCollectorThread encounterPerHourEntryCollectorThread;
     public static SavedEncounterEntriesDeletionThread savedEncounterEntriesDeletionThread;
+	public static FormsPerHourEntryCollectorThread formPerHourEntryCollectorThread;
+    public static SavedFormEntriesDeletionThread savedFormEntriesDeletionThread;
     public static LoggedInUsersDeletionThread loggedInUsersDeletionThread;
 
     /**
@@ -63,9 +67,15 @@ public class PerformanceMonitoringUtils {
         perMinuteUserLoginsCollectorThread = new PerMinuteUserLoginsCollectorThread();
         Thread perMinuteUserLoginsCollector = new Thread(perMinuteUserLoginsCollectorThread);
         perMinuteUserLoginsCollector.start();
-        formsPerHourEntryCollectorThread = new FormsPerHourEntryCollectorThread();
-        Thread formsCountCollector = new Thread(formsPerHourEntryCollectorThread);
+        formPerHourEntryCollectorThread = new FormsPerHourEntryCollectorThread();
+        Thread formsCountCollector = new Thread(formPerHourEntryCollectorThread);
         formsCountCollector.start();
+        encounterPerHourEntryCollectorThread = new EncountersPerHourEntryCollectorThread();
+        Thread encountersCountCollector = new Thread(encounterPerHourEntryCollectorThread);
+        encountersCountCollector.start();
+        patientPerHourEntryCollectorThread = new PatientsPerHourEntryCollectorThread();
+        Thread patientCountCollector = new Thread(patientPerHourEntryCollectorThread);
+        patientCountCollector.start();
         savedEncounterEntriesDeletionThread = new SavedEncounterEntriesDeletionThread();
         Thread savedEncountersDeletor = new Thread(savedEncounterEntriesDeletionThread);
         savedEncountersDeletor.start();
@@ -132,7 +142,7 @@ public class PerformanceMonitoringUtils {
      * @param valueList
      * @return
      */
-    public static String prepareEncountersDataToGraph(List<FormsPerHourEntry> valueList) {
+    public static String prepareFormsDataToGraph(List<FormsPerHourEntry> valueList) {
 
         String fullEntry = "";
         for(FormsPerHourEntry metricValue : valueList){
@@ -142,14 +152,38 @@ public class PerformanceMonitoringUtils {
         }
         return fullEntry;
     }
+    
+    public static String prepareEncountersDataToGraph(List<EncountersPerHourEntry> valueList) {
 
+        String fullEntry = "";
+        for(EncountersPerHourEntry metricValue : valueList){
+            // the final parsed array elements would be in Format [new Date(1403842448), 636]  etc.
+            String oneEntry = "[new Date(" + (metricValue.getTimestamp()) + " ), " + (metricValue.getEncounterCount()) + "],";
+            fullEntry = fullEntry + oneEntry;
+        }
+        return fullEntry;
+    }
+
+    public static String preparePatientsDataToGraph(List<PatientsPerHourEntry> valueList) {
+
+        String fullEntry = "";
+        for(PatientsPerHourEntry metricValue : valueList){
+            // the final parsed array elements would be in Format [new Date(1403842448), 636]  etc.
+            String oneEntry = "[new Date(" + (metricValue.getTimestamp()) + " ), " + (metricValue.getPatientCount()) + "],";
+            fullEntry = fullEntry + oneEntry;
+        }
+        return fullEntry;
+    }
+	
     public static void stopCurrentlyRunningProcesses() {
         usedMemoryCollectorThread.stopUsedMemoryCollector();
         perMinuteUsedMemoryCollectorThread.stopPerMinMemoryCollector();
         usedMemoryDeletionThread.stopUsedMemoryDeletionThread();
         perMinuteUsedMemoryDeletionThread.stopPerminUsedMemoryDeletionThread();
         perMinuteUserLoginsCollectorThread.stopPerMinuteUserLoginsCollectorr();
-        formsPerHourEntryCollectorThread.stopFormCountCollectorThread();
+        formPerHourEntryCollectorThread.stopFormCountCollectorThread();
+        encounterPerHourEntryCollectorThread.stopEncounterCountCollectorThread();
+        patientPerHourEntryCollectorThread.stopPatientCountCollectorThread();
         savedEncounterEntriesDeletionThread.stopSavedEncounterEntriesDeletionThread();
         loggedInUsersDeletionThread.stopLoggedInUsersDeletionThread();
     }

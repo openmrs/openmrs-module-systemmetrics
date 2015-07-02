@@ -5,7 +5,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.systemmetrics.FormsPerHourEntry;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 
-/* This thread will run in every one hour and count the number of encounters created
+/* This thread will run in every one hour and count the number of forms created
 in that hour */
 
 public class FormsPerHourEntryCollectorThread implements Runnable{
@@ -13,7 +13,7 @@ public class FormsPerHourEntryCollectorThread implements Runnable{
     private boolean start;
     FormsPerHourEntry formsPerHourEntry;
     PerformanceMonitoringService performanceMonitoringService;
-    int createdEncountersPerHour = 0;
+    int createdFormsPerHour = 0;
 
     public FormsPerHourEntryCollectorThread() {
        startFormCountCollectorThread();
@@ -24,8 +24,8 @@ public class FormsPerHourEntryCollectorThread implements Runnable{
         Context.openSession();
         performanceMonitoringService = Context.getService(PerformanceMonitoringService.class);
         while (start){
-            createdEncountersPerHour = getCreatedEncounters(System.currentTimeMillis()-3600000,System.currentTimeMillis());
-            formsPerHourEntry= new FormsPerHourEntry(System.currentTimeMillis(),4,createdEncountersPerHour);
+            createdFormsPerHour = getCreatedForms(System.currentTimeMillis()-3600000,System.currentTimeMillis());
+            formsPerHourEntry= new FormsPerHourEntry(System.currentTimeMillis(),4,createdFormsPerHour);
             performanceMonitoringService.addFormsPerHourEntry(formsPerHourEntry);
             try {
                 Thread.sleep(3600000);
@@ -36,8 +36,8 @@ public class FormsPerHourEntryCollectorThread implements Runnable{
 
     }
 
-    private int getCreatedEncounters(long startTime, long endTime) {
-        return performanceMonitoringService.getCreatedEncounters(startTime,endTime);
+    private int getCreatedForms(long startTime, long endTime) {
+        return performanceMonitoringService.getCreatedForms(startTime,endTime);
     }
 
     private boolean isStarted(){

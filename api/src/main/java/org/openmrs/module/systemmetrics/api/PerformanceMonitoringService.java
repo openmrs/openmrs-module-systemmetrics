@@ -15,6 +15,12 @@ package org.openmrs.module.systemmetrics.api;
 
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.systemmetrics.*;
+import org.openmrs.module.systemmetrics.api.db.EncountersPerHourEntryDAO;
+import org.openmrs.module.systemmetrics.api.db.FormsPerHourEntryDAO;
+import org.openmrs.module.systemmetrics.api.db.PatientsPerHourEntryDAO;
+import org.openmrs.module.systemmetrics.api.db.SavedEncounterDAO;
+import org.openmrs.module.systemmetrics.api.db.SavedFormDAO;
+import org.openmrs.module.systemmetrics.api.db.SavedPatientDAO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -72,14 +78,59 @@ public interface PerformanceMonitoringService extends OpenmrsService {
 
     public List<FormsPerHourEntry> getFormsPerHourEntryForChart(long startTimestamp, long endTimestamp);
 
-    public int getCreatedEncounters(long startTimestamp, long endTimestamp);
+    public int getCreatedForms(long startTimestamp, long endTimestamp);
 
+	public SavedForm addSavedForm(SavedForm savedForm);
+	
+	public void removeSavedForm(SavedForm savedForm);
+
+	public void removeSavedFormsWithinTime(long startTimestamp, long endTimestamp);
+	
+    public FormsPerHourEntryDAO getFormsPerHourEntryDAO();
+
+    public void setFormsPerHourEntryDAO(FormsPerHourEntryDAO formsPerHourEntryDAO);
+    
+    public SavedFormDAO getSavedFormDAO();
+    
+    public void setSavedFormDAO(SavedFormDAO savedFormDAO); 
+    
     public SavedEncounter addSavedEncounter(SavedEncounter savedEncounter);
 
     public void removeSavedEncounter(SavedEncounter savedEncounter);
 
     public void removeSavedEncountersWithinTime(long startTimestamp, long endTimestamp);
 
+    public EncountersPerHourEntry addEncountersPerHourEntry(EncountersPerHourEntry encountersPerHourEntry);
 
+    public List<EncountersPerHourEntry> getEncountersPerHourEntryForChart(long startTimestamp, long endTimestamp);
 
+    public int getCreatedEncounters(long startTimestamp, long endTimestamp);
+
+    public SavedEncounterDAO getSavedEncounterDAO();
+
+    public void setSavedEncounterDAO(SavedEncounterDAO savedEncounterDAO);
+	
+    public EncountersPerHourEntryDAO getEncountersPerHourEntryDAO();
+
+    public void setEncountersPerHourEntryDAO(EncountersPerHourEntryDAO encountersPerHourEntryDAO);
+
+	public SavedPatient addSavedPatient(SavedPatient savedPatient);
+
+	public void removeSavedPatient(SavedPatient savedPatient);
+
+	public void removeSavedPatientsWithinTime(long startTimestamp, long endTimestamp);
+
+    public PatientsPerHourEntry addPatientsPerHourEntry(PatientsPerHourEntry patientsPerHourEntry);
+
+    public List<PatientsPerHourEntry> getPatientsPerHourEntryForChart(long startTimestamp, long endTimestamp);
+
+    public int getCreatedPatients(long startTimestamp, long endTimestamp);
+
+    public SavedPatientDAO getSavedPatientDAO();
+	
+    public void setSavedPatientDAO(SavedPatientDAO savedPatientDAO);
+    
+    public PatientsPerHourEntryDAO getPatientsPerHourEntryDAO();
+
+    public void setPatientsPerHourEntryDAO(PatientsPerHourEntryDAO patientsPerHourEntryDAO);
 }

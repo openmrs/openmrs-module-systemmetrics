@@ -21,7 +21,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="system-metrics-10" author="milinda-ruk">
+    <changeSet id="system-metrics-2" author="milinda-ruk">
         <createTable tableName="systemmetrics_metric_value">
             <column name="timestamp" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
@@ -73,7 +73,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="system-metrics-6" author="milinda-ruk">
+    <changeSet id="system-metrics-6" author="vineet-kumar">
         <createTable tableName="systemmetrics_forms_per_hour">
             <column name="timestamp" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
@@ -86,8 +86,54 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="system-metrics-7" author="milinda-ruk">
+    <changeSet id="system-metrics-7" author="vineet-kumar">
+        <createTable tableName="systemmetrics_encounters_per_hour">
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="encounter_count" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="system-metrics-8" author="vineet-kumar">
+        <createTable tableName="systemmetrics_patients_per_hour">
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="patient_count" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="system-metrics-9" author="milinda-ruk">
         <createTable tableName="systemmetrics_saved_encounter">
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="system-metrics-10" author="vineet-kumar">
+        <createTable tableName="systemmetrics_saved_patient">
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="system-metrics-11" author="vineet-kumar">
+        <createTable tableName="systemmetrics_saved_form">
             <column name="timestamp" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>

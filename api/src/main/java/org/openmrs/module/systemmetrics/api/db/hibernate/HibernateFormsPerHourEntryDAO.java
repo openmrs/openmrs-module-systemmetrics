@@ -4,17 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.openmrs.Encounter;
 import org.openmrs.module.systemmetrics.FormsPerHourEntry;
-import org.openmrs.module.systemmetrics.LoginValue;
-import org.openmrs.module.systemmetrics.PerMinLoginValue;
 import org.openmrs.module.systemmetrics.api.db.FormsPerHourEntryDAO;
-
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 
@@ -41,10 +32,10 @@ public class HibernateFormsPerHourEntryDAO implements FormsPerHourEntryDAO{
     }
 
     @Override
-    public int getCreatedEncounters(long startTimestamp, long endTimestamp)  {
-        Query query =  sessionFactory.getCurrentSession().createQuery("from SavedEncounter where timestamp > :startTimestamp and timestamp < :endTimestamp").setParameter("startTimestamp", startTimestamp).setParameter("endTimestamp", endTimestamp);
-        int encounterCount = query.list().size();
-        return encounterCount;
+    public int getCreatedForms(long startTimestamp, long endTimestamp)  {
+        Query query =  sessionFactory.getCurrentSession().createQuery("from SavedForm where timestamp > :startTimestamp and timestamp < :endTimestamp").setParameter("startTimestamp", startTimestamp).setParameter("endTimestamp", endTimestamp);
+        int formCount = query.list().size();
+        return formCount;
 
     }
 }
