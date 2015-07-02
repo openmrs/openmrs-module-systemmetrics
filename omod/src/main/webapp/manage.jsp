@@ -68,6 +68,22 @@
 					</span>
 					<span><b> Created Encounters </b></span>
 				</div>
+				<div>
+					<span>
+						<a href="createdPatients.form">
+						<input type="button" name="enc_button" id="enc__button" value="View" class="view_indicator"/>
+						</a>
+					</span>
+					<span><b> Created Patients </b></span>
+				</div>
+				<div>
+					<span>
+						<a href="createdForms.form">
+						<input type="button" name="enc_button" id="enc__button" value="View" class="view_indicator"/>
+						</a>
+					</span>
+					<span><b> Created Forms </b></span>
+				</div>				
             </div>
             <div id="view3">
 				<div>

@@ -83,6 +83,22 @@
                                     </property>
                                 </bean>
                             </property>
+                            <property name="encountersPerHourEntryDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateEncountersPerHourEntryDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>
+                            <property name="patientsPerHourEntryDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernatePatientsPerHourEntryDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>                            
                             <property name="savedEncounterDAO">
                                 <bean
                                         class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateSavedEncounterDAO">
@@ -91,6 +107,22 @@
                                     </property>
                                 </bean>
                             </property>
+                            <property name="savedPatientDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateSavedPatientDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>
+                            <property name="savedFormDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateSavedFormDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>                           
 						</bean>
 					</property>
 					<property name="preInterceptors">

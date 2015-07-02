@@ -11,5 +11,5 @@ public interface FormsPerHourEntryDAO {
 
     public List<FormsPerHourEntry> getFormsPerHourEntryForChart(long startTimestamp, long endTimestamp);
 
-    public int getCreatedEncounters(long startTimestamp, long endTimestamp);
+    public int getCreatedForms(long startTimestamp, long endTimestamp);
 }

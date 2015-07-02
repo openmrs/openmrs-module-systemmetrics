@@ -133,9 +133,35 @@ public class  SystemPerformanceandUtilizationManageController {
     public void countEncounters(ModelMap model) {
         model.addAttribute("user", Context.getAuthenticatedUser());
         PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
-        List<FormsPerHourEntry> valueList = service.getFormsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis());
+        List<EncountersPerHourEntry> valueList = service.getEncountersPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis());
         String dataToGraph = PerformanceMonitoringUtils.prepareEncountersDataToGraph(valueList);
+        model.addAttribute("encounterCounts", dataToGraph);
+
+    }
+
+    /*
+    * We get the form creation data in the previous 12 hours to display in the graph
+    */
+    @RequestMapping(value = "/module/systemmetrics/createdForms", method = RequestMethod.GET)
+    public void countForms(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
+        List<FormsPerHourEntry> valueList = service.getFormsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis());
+        String dataToGraph = PerformanceMonitoringUtils.prepareFormsDataToGraph(valueList);
         model.addAttribute("formCounts", dataToGraph);
+
+    }
+
+    /*
+    * We get the patient creation data in the previous 12 hours to display in the graph
+    */
+    @RequestMapping(value = "/module/systemmetrics/createdPatients", method = RequestMethod.GET)
+    public void countPatients(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
+        List<PatientsPerHourEntry> valueList = service.getPatientsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis());
+        String dataToGraph = PerformanceMonitoringUtils.preparePatientsDataToGraph(valueList);
+        model.addAttribute("patientCounts", dataToGraph);
 
     }
 	 /*
