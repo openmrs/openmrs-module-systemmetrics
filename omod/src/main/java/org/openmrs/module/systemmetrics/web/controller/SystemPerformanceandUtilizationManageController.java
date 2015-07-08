@@ -164,6 +164,55 @@ public class  SystemPerformanceandUtilizationManageController {
         model.addAttribute("patientCounts", dataToGraph);
 
     }
+    /*
+    * We get the visit creation data in the previous 12 hours to display in the graph
+    */
+    @RequestMapping(value = "/module/systemmetrics/createdVisits", method = RequestMethod.GET)
+    public void countVisits(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
+        List<VisitsPerHourEntry> valueList = service.getVisitsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis());
+        String dataToGraph = PerformanceMonitoringUtils.prepareVisitsDataToGraph(valueList);
+        model.addAttribute("visitCounts", dataToGraph);
+
+    }
+
+    /*
+    * We get the observation creation data in the previous 12 hours to display in the graph
+    */
+    @RequestMapping(value = "/module/systemmetrics/createdObservations", method = RequestMethod.GET)
+    public void countObservations(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
+        List<ObservationsPerHourEntry> valueList = service.getObservationsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis());
+        String dataToGraph = PerformanceMonitoringUtils.prepareObservationsDataToGraph(valueList);
+        model.addAttribute("observationCounts", dataToGraph);
+
+    }
+    /*
+    * We get the concept creation data in the previous 12 hours to display in the graph
+    */
+    @RequestMapping(value = "/module/systemmetrics/createdConcepts", method = RequestMethod.GET)
+    public void countConcepts(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
+        List<ConceptsPerHourEntry> valueList = service.getConceptsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis());
+        String dataToGraph = PerformanceMonitoringUtils.prepareConceptsDataToGraph(valueList);
+        model.addAttribute("conceptCounts", dataToGraph);
+
+    }
+    /*
+    * We get the report creation data in the previous 12 hours to display in the graph
+    */
+    @RequestMapping(value = "/module/systemmetrics/ranReports", method = RequestMethod.GET)
+    public void countReports(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
+        List<ReportsPerHourEntry> valueList = service.getReportsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis());
+        String dataToGraph = PerformanceMonitoringUtils.prepareReportsDataToGraph(valueList);
+        model.addAttribute("reportCounts", dataToGraph);
+
+    }
 	 /*
      * CPU Usage of JVM
      */

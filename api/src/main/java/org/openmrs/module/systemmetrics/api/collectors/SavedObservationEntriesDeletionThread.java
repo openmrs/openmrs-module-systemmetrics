@@ -5,10 +5,10 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.systemmetrics.api.PerformanceMonitoringService;
 
 /**
-  * This threads runs in every 1 day and delete the previous day's saved Form entries
+  * This threads runs in every 1 day and delete the previous day's saved observation entries
   * and forms per hours entries from relevant tables.
   */
-public class SavedFormEntriesDeletionThread implements Runnable{
+public class SavedObservationEntriesDeletionThread implements Runnable{
 
     private boolean start;
     private long startTimestamp;
@@ -16,8 +16,8 @@ public class SavedFormEntriesDeletionThread implements Runnable{
 
     PerformanceMonitoringService performanceMonitoringService;
 
-    public SavedFormEntriesDeletionThread(){
-        startSavedFormEntriesDeletionThread();
+    public SavedObservationEntriesDeletionThread(){
+        startSavedObservationEntriesDeletionThread();
     }
 
     @Override
@@ -25,21 +25,22 @@ public class SavedFormEntriesDeletionThread implements Runnable{
         Context.openSession();
         performanceMonitoringService = Context.getService(PerformanceMonitoringService.class);
         while (start){
+            startTimestamp = System.currentTimeMillis();
             try {
                 Thread.sleep(43200000*2);
             } catch (InterruptedException e) {
                 /* ignore*/
             }
             endTimestamp = System.currentTimeMillis();
-            performanceMonitoringService.removeSavedFormsWithinTime(startTimestamp, endTimestamp);
+            performanceMonitoringService.removeSavedObservationsWithinTime(startTimestamp, endTimestamp);
         }
     }
 
-    public void startSavedFormEntriesDeletionThread(){
+    public void startSavedObservationEntriesDeletionThread(){
         start = true;
     }
 
-    public void stopSavedFormEntriesDeletionThread(){
+    public void stopSavedObservationEntriesDeletionThread(){
         start = false;
     }
 }

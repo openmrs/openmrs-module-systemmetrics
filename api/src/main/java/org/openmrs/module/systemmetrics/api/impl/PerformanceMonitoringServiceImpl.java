@@ -39,9 +39,17 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
     private FormsPerHourEntryDAO formsPerHourEntryDAO;
     private EncountersPerHourEntryDAO encountersPerHourEntryDAO;
     private PatientsPerHourEntryDAO patientsPerHourEntryDAO;
+    private ConceptsPerHourEntryDAO conceptsPerHourEntryDAO;
+    private VisitsPerHourEntryDAO visitsPerHourEntryDAO;
+    private ObservationsPerHourEntryDAO observationsPerHourEntryDAO;
+    private ReportsPerHourEntryDAO reportsPerHourEntryDAO;
     private SavedEncounterDAO savedEncounterDAO;
     private SavedPatientDAO savedPatientDAO;
     private SavedFormDAO savedFormDAO;
+    private SavedConceptDAO savedConceptDAO;
+    private SavedVisitDAO savedVisitDAO;
+    private SavedObservationDAO savedObservationDAO;
+    private RanReportDAO ranReportDAO;
     
     public void setPerformanceMonitoringDAO(PerformanceMonitoringDAO performanceMonitoringDAO) {
 	    this.performanceMonitoringDAO = performanceMonitoringDAO;
@@ -314,6 +322,190 @@ public class PerformanceMonitoringServiceImpl extends BaseOpenmrsService impleme
     public void setPatientsPerHourEntryDAO(PatientsPerHourEntryDAO patientsPerHourEntryDAO) {
         this.patientsPerHourEntryDAO = patientsPerHourEntryDAO;
     }
+    
+    public SavedVisitDAO getSavedVisitDAO() {
+        return savedVisitDAO;
+    }
 
+    public void setSavedVisitDAO(SavedVisitDAO savedVisitDAO) {
+        this.savedVisitDAO = savedVisitDAO;
+    }
+    
+    @Override
+    public VisitsPerHourEntry addVisitsPerHourEntry(VisitsPerHourEntry visitsPerHourEntry) {
+        return visitsPerHourEntryDAO.addVisitsPerHourEntry(visitsPerHourEntry);
+    }
+
+    @Override
+    public List<VisitsPerHourEntry> getVisitsPerHourEntryForChart(long startTimestamp, long endTimestamp) {
+        return visitsPerHourEntryDAO.getVisitsPerHourEntryForChart(startTimestamp,endTimestamp);
+    }
+
+    @Override
+    public int getCreatedVisits(long startTimestamp, long endTimestamp){
+        return visitsPerHourEntryDAO.getCreatedVisits(startTimestamp,endTimestamp);
+    }
+
+	@Override
+	public SavedVisit addSavedVisit(SavedVisit savedVisit) {
+		// TODO Auto-generated method stub
+		return savedVisitDAO.addSavedVisit(savedVisit);
+	}
+    @Override
+    public void removeSavedVisit(SavedVisit savedVisit) {
+        savedVisitDAO.removeSavedVisit(savedVisit);
+    }
+
+    @Override
+    public void removeSavedVisitsWithinTime(long startTimestamp, long endTimestamp) {
+        savedVisitDAO.removeSavedVisitsWithinTime(startTimestamp,endTimestamp);
+    }
+     
+    public VisitsPerHourEntryDAO getVisitsPerHourEntryDAO() {
+        return visitsPerHourEntryDAO;
+    }
+
+    public void setVisitsPerHourEntryDAO(VisitsPerHourEntryDAO visitsPerHourEntryDAO) {
+        this.visitsPerHourEntryDAO = visitsPerHourEntryDAO;
+    }
+    
+    public SavedObservationDAO getSavedObservationDAO() {
+        return savedObservationDAO;
+    }
+
+    public void setSavedObservationDAO(SavedObservationDAO savedObservationDAO) {
+        this.savedObservationDAO = savedObservationDAO;
+    }
+    
+    @Override
+    public ObservationsPerHourEntry addObservationsPerHourEntry(ObservationsPerHourEntry observationsPerHourEntry) {
+        return observationsPerHourEntryDAO.addObservationsPerHourEntry(observationsPerHourEntry);
+    }
+
+    @Override
+    public List<ObservationsPerHourEntry> getObservationsPerHourEntryForChart(long startTimestamp, long endTimestamp) {
+        return observationsPerHourEntryDAO.getObservationsPerHourEntryForChart(startTimestamp,endTimestamp);
+    }
+
+    @Override
+    public int getCreatedObservations(long startTimestamp, long endTimestamp){
+        return observationsPerHourEntryDAO.getCreatedObservations(startTimestamp,endTimestamp);
+    }
+
+	@Override
+	public SavedObservation addSavedObservation(SavedObservation savedObservation) {
+		// TODO Auto-generated method stub
+		return savedObservationDAO.addSavedObservation(savedObservation);
+	}
+    @Override
+    public void removeSavedObservation(SavedObservation savedObservation) {
+        savedObservationDAO.removeSavedObservation(savedObservation);
+    }
+
+    @Override
+    public void removeSavedObservationsWithinTime(long startTimestamp, long endTimestamp) {
+        savedObservationDAO.removeSavedObservationsWithinTime(startTimestamp,endTimestamp);
+    }
+     
+    public ObservationsPerHourEntryDAO getObservationsPerHourEntryDAO() {
+        return observationsPerHourEntryDAO;
+    }
+
+    public void setObservationsPerHourEntryDAO(ObservationsPerHourEntryDAO observationsPerHourEntryDAO) {
+        this.observationsPerHourEntryDAO = observationsPerHourEntryDAO;
+    }
+    
+    public SavedConceptDAO getSavedConceptDAO() {
+        return savedConceptDAO;
+    }
+
+    public void setSavedConceptDAO(SavedConceptDAO savedConceptDAO) {
+        this.savedConceptDAO = savedConceptDAO;
+    }
+    
+    @Override
+    public ConceptsPerHourEntry addConceptsPerHourEntry(ConceptsPerHourEntry conceptsPerHourEntry) {
+        return conceptsPerHourEntryDAO.addConceptsPerHourEntry(conceptsPerHourEntry);
+    }
+
+    @Override
+    public List<ConceptsPerHourEntry> getConceptsPerHourEntryForChart(long startTimestamp, long endTimestamp) {
+        return conceptsPerHourEntryDAO.getConceptsPerHourEntryForChart(startTimestamp,endTimestamp);
+    }
+
+    @Override
+    public int getCreatedConcepts(long startTimestamp, long endTimestamp){
+        return conceptsPerHourEntryDAO.getCreatedConcepts(startTimestamp,endTimestamp);
+    }
+
+	@Override
+	public SavedConcept addSavedConcept(SavedConcept savedConcept) {
+		// TODO Auto-generated method stub
+		return savedConceptDAO.addSavedConcept(savedConcept);
+	}
+    @Override
+    public void removeSavedConcept(SavedConcept savedConcept) {
+        savedConceptDAO.removeSavedConcept(savedConcept);
+    }
+
+    @Override
+    public void removeSavedConceptsWithinTime(long startTimestamp, long endTimestamp) {
+        savedConceptDAO.removeSavedConceptsWithinTime(startTimestamp,endTimestamp);
+    }
+     
+    public ConceptsPerHourEntryDAO getConceptsPerHourEntryDAO() {
+        return conceptsPerHourEntryDAO;
+    }
+
+    public void setConceptsPerHourEntryDAO(ConceptsPerHourEntryDAO conceptsPerHourEntryDAO) {
+        this.conceptsPerHourEntryDAO = conceptsPerHourEntryDAO;
+    }
+    
+    
+    public RanReportDAO getRanReportDAO() {
+        return ranReportDAO;
+    }
+
+    public void setRanReportDAO(RanReportDAO ranReportDAO) {
+        this.ranReportDAO = ranReportDAO;
+    }
+    
+    @Override
+    public ReportsPerHourEntry addReportsPerHourEntry(ReportsPerHourEntry reportsPerHourEntry) {
+        return reportsPerHourEntryDAO.addReportsPerHourEntry(reportsPerHourEntry);
+    }
+
+    @Override
+    public List<ReportsPerHourEntry> getReportsPerHourEntryForChart(long startTimestamp, long endTimestamp) {
+        return reportsPerHourEntryDAO.getReportsPerHourEntryForChart(startTimestamp,endTimestamp);
+    }
+
+    @Override
+    public int getCreatedReports(long startTimestamp, long endTimestamp){
+        return reportsPerHourEntryDAO.getCreatedReports(startTimestamp,endTimestamp);
+    }
+
+	@Override
+	public RanReport addRanReport(RanReport ranReport) {
+		// TODO Auto-generated method stub
+		return ranReportDAO.addRanReport(ranReport);
+	}
+    @Override
+    public void removeRanReport(RanReport ranReport) {
+        ranReportDAO.removeRanReport(ranReport);
+    }
+
+    @Override
+    public void removeRanReportsWithinTime(long startTimestamp, long endTimestamp) {
+        ranReportDAO.removeRanReportsWithinTime(startTimestamp,endTimestamp);
+    }
+     
+    public ReportsPerHourEntryDAO getReportsPerHourEntryDAO() {
+        return reportsPerHourEntryDAO;
+    }
+
+    public void setReportsPerHourEntryDAO(ReportsPerHourEntryDAO reportsPerHourEntryDAO) {
+        this.reportsPerHourEntryDAO = reportsPerHourEntryDAO;
+    }
     
 }

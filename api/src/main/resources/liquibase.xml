@@ -143,4 +143,96 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="system-metrics-12" author="vineet-kumar">
+        <createTable tableName="systemmetrics_visits_per_hour">
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="visit_count" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="system-metrics-13" author="vineet-kumar">
+        <createTable tableName="systemmetrics_observations_per_hour">
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="observation_count" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+        <changeSet id="system-metrics-14" author="vineet-kumar">
+        <createTable tableName="systemmetrics_reports_per_hour">
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="report_count" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+        <changeSet id="system-metrics-15" author="vineet-kumar">
+        <createTable tableName="systemmetrics_concepts_per_hour">
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="concept_count" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="system-metrics-16" author="milinda-ruk">
+        <createTable tableName="systemmetrics_ran_report">
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="system-metrics-17" author="vineet-kumar">
+        <createTable tableName="systemmetrics_saved_visit">
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="system-metrics-18" author="vineet-kumar">
+        <createTable tableName="systemmetrics_saved_observation">
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="system-metrics-19" author="vineet-kumar">
+        <createTable tableName="systemmetrics_saved_concept">
+            <column name="timestamp" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="metric_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>

@@ -15,12 +15,20 @@ package org.openmrs.module.systemmetrics.api;
 
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.systemmetrics.*;
+import org.openmrs.module.systemmetrics.api.db.ConceptsPerHourEntryDAO;
 import org.openmrs.module.systemmetrics.api.db.EncountersPerHourEntryDAO;
 import org.openmrs.module.systemmetrics.api.db.FormsPerHourEntryDAO;
+import org.openmrs.module.systemmetrics.api.db.ObservationsPerHourEntryDAO;
 import org.openmrs.module.systemmetrics.api.db.PatientsPerHourEntryDAO;
+import org.openmrs.module.systemmetrics.api.db.RanReportDAO;
+import org.openmrs.module.systemmetrics.api.db.ReportsPerHourEntryDAO;
+import org.openmrs.module.systemmetrics.api.db.SavedConceptDAO;
 import org.openmrs.module.systemmetrics.api.db.SavedEncounterDAO;
 import org.openmrs.module.systemmetrics.api.db.SavedFormDAO;
+import org.openmrs.module.systemmetrics.api.db.SavedObservationDAO;
 import org.openmrs.module.systemmetrics.api.db.SavedPatientDAO;
+import org.openmrs.module.systemmetrics.api.db.SavedVisitDAO;
+import org.openmrs.module.systemmetrics.api.db.VisitsPerHourEntryDAO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -133,4 +141,84 @@ public interface PerformanceMonitoringService extends OpenmrsService {
     public PatientsPerHourEntryDAO getPatientsPerHourEntryDAO();
 
     public void setPatientsPerHourEntryDAO(PatientsPerHourEntryDAO patientsPerHourEntryDAO);
+    
+	public SavedConcept addSavedConcept(SavedConcept savedConcept);
+
+	public void removeSavedConcept(SavedConcept savedConcept);
+
+	public void removeSavedConceptsWithinTime(long startTimestamp, long endTimestamp);
+
+    public ConceptsPerHourEntry addConceptsPerHourEntry(ConceptsPerHourEntry conceptsPerHourEntry);
+
+    public List<ConceptsPerHourEntry> getConceptsPerHourEntryForChart(long startTimestamp, long endTimestamp);
+
+    public int getCreatedConcepts(long startTimestamp, long endTimestamp);
+
+    public SavedConceptDAO getSavedConceptDAO();
+	
+    public void setSavedConceptDAO(SavedConceptDAO savedConceptDAO);
+    
+    public ConceptsPerHourEntryDAO getConceptsPerHourEntryDAO();
+
+    public void setConceptsPerHourEntryDAO(ConceptsPerHourEntryDAO conceptsPerHourEntryDAO);
+    
+	public SavedObservation addSavedObservation(SavedObservation savedObservation);
+
+	public void removeSavedObservation(SavedObservation savedObservation);
+
+	public void removeSavedObservationsWithinTime(long startTimestamp, long endTimestamp);
+
+    public ObservationsPerHourEntry addObservationsPerHourEntry(ObservationsPerHourEntry observationsPerHourEntry);
+
+    public List<ObservationsPerHourEntry> getObservationsPerHourEntryForChart(long startTimestamp, long endTimestamp);
+
+    public int getCreatedObservations(long startTimestamp, long endTimestamp);
+
+    public SavedObservationDAO getSavedObservationDAO();
+	
+    public void setSavedObservationDAO(SavedObservationDAO savedObservationDAO);
+    
+    public ObservationsPerHourEntryDAO getObservationsPerHourEntryDAO();
+
+    public void setObservationsPerHourEntryDAO(ObservationsPerHourEntryDAO observationsPerHourEntryDAO);
+    
+	public SavedVisit addSavedVisit(SavedVisit savedVisit);
+
+	public void removeSavedVisit(SavedVisit savedVisit);
+
+	public void removeSavedVisitsWithinTime(long startTimestamp, long endTimestamp);
+
+    public VisitsPerHourEntry addVisitsPerHourEntry(VisitsPerHourEntry visitsPerHourEntry);
+
+    public List<VisitsPerHourEntry> getVisitsPerHourEntryForChart(long startTimestamp, long endTimestamp);
+
+    public int getCreatedVisits(long startTimestamp, long endTimestamp);
+
+    public SavedVisitDAO getSavedVisitDAO();
+	
+    public void setSavedVisitDAO(SavedVisitDAO savedVisitDAO);
+    
+    public VisitsPerHourEntryDAO getVisitsPerHourEntryDAO();
+
+    public void setVisitsPerHourEntryDAO(VisitsPerHourEntryDAO visitsPerHourEntryDAO);
+    
+	public RanReport addRanReport(RanReport ranReport);
+
+	public void removeRanReport(RanReport ranReport);
+
+	public void removeRanReportsWithinTime(long startTimestamp, long endTimestamp);
+
+    public ReportsPerHourEntry addReportsPerHourEntry(ReportsPerHourEntry reportsPerHourEntry);
+
+    public List<ReportsPerHourEntry> getReportsPerHourEntryForChart(long startTimestamp, long endTimestamp);
+
+    public int getCreatedReports(long startTimestamp, long endTimestamp);
+
+    public RanReportDAO getRanReportDAO();
+	
+    public void setRanReportDAO(RanReportDAO ranReportDAO);
+    
+    public ReportsPerHourEntryDAO getReportsPerHourEntryDAO();
+
+    public void setReportsPerHourEntryDAO(ReportsPerHourEntryDAO reportsPerHourEntryDAO);
 }

@@ -98,7 +98,39 @@
                                         <ref bean="sessionFactory" />
                                     </property>
                                 </bean>
-                            </property>                            
+                            </property>         
+                            <property name="reportsPerHourEntryDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateReportsPerHourEntryDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>
+                            <property name="visitsPerHourEntryDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateVisitsPerHourEntryDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>   
+                            <property name="observationsPerHourEntryDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateObservationsPerHourEntryDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>
+                            <property name="conceptsPerHourEntryDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateConceptsPerHourEntryDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>                                                                                
                             <property name="savedEncounterDAO">
                                 <bean
                                         class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateSavedEncounterDAO">
@@ -122,7 +154,39 @@
                                         <ref bean="sessionFactory" />
                                     </property>
                                 </bean>
-                            </property>                           
+                            </property>         
+                            <property name="ranReportDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateRanReportDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>
+                            <property name="savedVisitDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateSavedVisitDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>
+                            <property name="savedConceptDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateSavedConceptDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>     
+                           	<property name="savedObservationDAO">
+                                <bean
+                                        class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateSavedObservationDAO">
+                                    <property name="sessionFactory">
+                                        <ref bean="sessionFactory" />
+                                    </property>
+                                </bean>
+                            </property>              
 						</bean>
 					</property>
 					<property name="preInterceptors">

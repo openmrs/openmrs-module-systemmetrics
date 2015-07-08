@@ -58,11 +58,27 @@
     <advice>
         <point>org.openmrs.api.FormService</point>
         <class>org.openmrs.module.systemmetrics.api.advisors.FieldCreationAfterAdvice</class>
-    </advice>
+    </advice>       
     <advice>
         <point>org.openmrs.api.EncounterService</point>
         <class>org.openmrs.module.systemmetrics.api.advisors.FieldCreationAfterAdvice</class>
-    </advice>        
+    </advice>    
+    <advice>
+        <point>org.openmrs.api.ConceptService</point>
+        <class>org.openmrs.module.systemmetrics.api.advisors.FieldCreationAfterAdvice</class>
+    </advice>
+    <advice>
+        <point>org.openmrs.api.ObservationService</point>
+        <class>org.openmrs.module.systemmetrics.api.advisors.FieldCreationAfterAdvice</class>
+    </advice>       
+    <advice>
+        <point>org.openmrs.api.VisitService</point>
+        <class>org.openmrs.module.systemmetrics.api.advisors.FieldCreationAfterAdvice</class>
+    </advice>      
+    <advice>
+        <point>org.openmrs.module.reporting.report.service.ReportService</point>
+        <class>org.openmrs.module.systemmetrics.api.advisors.FieldCreationAfterAdvice</class>
+    </advice> 
     
 </module>
 
