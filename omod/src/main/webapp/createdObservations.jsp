@@ -13,18 +13,18 @@
 
         function drawChart() {
 
-        var text= "${formCounts}";   // this list contains the Date and Memory Usage data from the model
+        var text= "${observationCounts}";   // this list contains the Date and Memory Usage data from the model
         var timeAndEncCountArray = eval("[" + text + "]");
         var dataTable = new google.visualization.DataTable();
         dataTable.addColumn('datetime', 'Time');          // the format 'datetime' only accepts Date objects
-        dataTable.addColumn('number', 'Forms Count');
+        dataTable.addColumn('number', 'Observations Count');
         dataTable.addRows(timeAndEncCountArray);
 
         var options = {
         title:'Per hour',
         chartArea : { left :150 },
         hAxis: { title: 'Time' },
-        vAxis: { title: 'Forms Count' }
+        vAxis: { title: 'Observations Count' }
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('form_div'));
@@ -35,8 +35,8 @@
         </head>
 
         <body>
-        <div id="perHourFormsChart">
-        <b class="boxHeader"> Created Forms against Date-Time  </b>
+        <div id="perHourObservationChart">
+        <b class="boxHeader"> Created Observations against Date-Time  </b>
         <div class="box">
         <div id="form_div" style="height:400px"></div>
         </div>

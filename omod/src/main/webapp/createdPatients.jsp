@@ -35,7 +35,7 @@
         </head>
 
         <body>
-        <div id="perHourEncountersChart">
+        <div id="perHourPatientsChart">
         <b class="boxHeader"> Created Patients against Date-Time  </b>
         <div class="box">
         <div id="form_div" style="height:400px"></div>
