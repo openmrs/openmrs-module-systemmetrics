@@ -25,7 +25,7 @@ public class ConceptsPerHourEntryCollectorThread implements Runnable{
         performanceMonitoringService = Context.getService(PerformanceMonitoringService.class);
         while (start){
             createdConceptsPerHour = getCreatedConcepts(System.currentTimeMillis()-3600000,System.currentTimeMillis());
-            conceptsPerHourEntry= new ConceptsPerHourEntry(System.currentTimeMillis(),4,createdConceptsPerHour);
+            conceptsPerHourEntry= new ConceptsPerHourEntry(System.currentTimeMillis(),10,createdConceptsPerHour);
             performanceMonitoringService.addConceptsPerHourEntry(conceptsPerHourEntry);
             try {
                 Thread.sleep(3600000);

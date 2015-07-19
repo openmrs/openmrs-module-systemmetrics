@@ -25,7 +25,7 @@ public class ObservationsPerHourEntryCollectorThread implements Runnable{
         performanceMonitoringService = Context.getService(PerformanceMonitoringService.class);
         while (start){
             createdObservationsPerHour = getCreatedObservations(System.currentTimeMillis()-3600000,System.currentTimeMillis());
-            observationsPerHourEntry= new ObservationsPerHourEntry(System.currentTimeMillis(),4,createdObservationsPerHour);
+            observationsPerHourEntry= new ObservationsPerHourEntry(System.currentTimeMillis(),12,createdObservationsPerHour);
             performanceMonitoringService.addObservationsPerHourEntry(observationsPerHourEntry);
             try {
                 Thread.sleep(3600000);

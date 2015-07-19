@@ -25,7 +25,7 @@ public class ReportsPerHourEntryCollectorThread implements Runnable{
         performanceMonitoringService = Context.getService(PerformanceMonitoringService.class);
         while (start){
             createdReportsPerHour = getCreatedReports(System.currentTimeMillis()-3600000,System.currentTimeMillis());
-            reportsPerHourEntry= new ReportsPerHourEntry(System.currentTimeMillis(),4,createdReportsPerHour);
+            reportsPerHourEntry= new ReportsPerHourEntry(System.currentTimeMillis(),16,createdReportsPerHour);
             performanceMonitoringService.addReportsPerHourEntry(reportsPerHourEntry);
             try {
                 Thread.sleep(3600000);

@@ -25,7 +25,7 @@ public class PatientsPerHourEntryCollectorThread implements Runnable{
         performanceMonitoringService = Context.getService(PerformanceMonitoringService.class);
         while (start){
             createdPatientsPerHour = getCreatedPatients(System.currentTimeMillis()-3600000,System.currentTimeMillis());
-            patientsPerHourEntry= new PatientsPerHourEntry(System.currentTimeMillis(),4,createdPatientsPerHour);
+            patientsPerHourEntry= new PatientsPerHourEntry(System.currentTimeMillis(),6,createdPatientsPerHour);
             performanceMonitoringService.addPatientsPerHourEntry(patientsPerHourEntry);
             try {
                 Thread.sleep(3600000);
