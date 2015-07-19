@@ -25,7 +25,7 @@ public class FormsPerHourEntryCollectorThread implements Runnable{
         performanceMonitoringService = Context.getService(PerformanceMonitoringService.class);
         while (start){
             createdFormsPerHour = getCreatedForms(System.currentTimeMillis()-3600000,System.currentTimeMillis());
-            formsPerHourEntry= new FormsPerHourEntry(System.currentTimeMillis(),4,createdFormsPerHour);
+            formsPerHourEntry= new FormsPerHourEntry(System.currentTimeMillis(),8,createdFormsPerHour);
             performanceMonitoringService.addFormsPerHourEntry(formsPerHourEntry);
             try {
                 Thread.sleep(3600000);

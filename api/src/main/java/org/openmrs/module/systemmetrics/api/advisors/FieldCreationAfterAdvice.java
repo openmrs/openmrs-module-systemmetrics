@@ -48,42 +48,42 @@ public class FieldCreationAfterAdvice implements AfterReturningAdvice {
             }
        }
        else if (method.getName().equals(SAVE_FORM))  { 
-    	   SavedForm savedForm = new SavedForm(System.currentTimeMillis(),5);
+    	   SavedForm savedForm = new SavedForm(System.currentTimeMillis(),9);
             performanceMonitoringService.addSavedForm(savedForm);
             if(log.isDebugEnabled()){
                 log.debug("Adding savedForm entry : " + savedForm.getTimestamp());
             }
        }
        else if (method.getName().equals(SAVE_PATIENT))  {
-           SavedPatient savedPatient = new SavedPatient(System.currentTimeMillis(),5);
+           SavedPatient savedPatient = new SavedPatient(System.currentTimeMillis(),7);
            performanceMonitoringService.addSavedPatient(savedPatient);
            if(log.isDebugEnabled()){
                log.debug("Adding savedPatient entry : " + savedPatient.getTimestamp());
            }
       }
       else if (method.getName().equals(RUN_REPORT))  {
-           RanReport ranReport = new RanReport(System.currentTimeMillis(),5);
+           RanReport ranReport = new RanReport(System.currentTimeMillis(),17);
            performanceMonitoringService.addRanReport(ranReport);
            if(log.isDebugEnabled()){
                log.debug("Adding ranReport entry : " + ranReport.getTimestamp());
            }
       }
       else  if (method.getName().equals(SAVE_CONCEPT))  {
-      	SavedConcept savedConcept = new SavedConcept(System.currentTimeMillis(),5);
+      	SavedConcept savedConcept = new SavedConcept(System.currentTimeMillis(),11);
         performanceMonitoringService.addSavedConcept(savedConcept);
         if(log.isDebugEnabled()){
             log.debug("Adding savedConcept entry : " + savedConcept.getTimestamp());
         }
       }
       else if (method.getName().equals(SAVE_OBSERVATION))  { 
-    	  SavedObservation savedObservation = new SavedObservation(System.currentTimeMillis(),5);
+    	  SavedObservation savedObservation = new SavedObservation(System.currentTimeMillis(),13);
     	  performanceMonitoringService.addSavedObservation(savedObservation);
     	  if(log.isDebugEnabled()){
     		  log.debug("Adding savedObservation entry : " + savedObservation.getTimestamp());
     	  }
       }
       else if (method.getName().equals(SAVE_VISIT))  {
-    	  SavedVisit savedVisit = new SavedVisit(System.currentTimeMillis(),5);
+    	  SavedVisit savedVisit = new SavedVisit(System.currentTimeMillis(),15);
     	  performanceMonitoringService.addSavedVisit(savedVisit);
     	  if(log.isDebugEnabled()){
     		  log.debug("Adding savedVisit entry : " + savedVisit.getTimestamp());

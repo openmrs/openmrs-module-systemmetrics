@@ -110,7 +110,50 @@ public class  SystemPerformanceandUtilizationManageController {
         loginThread.start();
 
     }
+    
+    @RequestMapping(value = "/module/systemmetrics/applicationGlobal", method = RequestMethod.GET)
+    public void applicationGlobal(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+    }
 
+    @RequestMapping(value = "/module/systemmetrics/globalAppData", method = RequestMethod.GET)
+    public  @ResponseBody List<String> globalAppData(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        List<String> appDataList = new ArrayList<String>();
+        String dataToGraph = new String();
+        PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
+        
+        dataToGraph = PerformanceMonitoringUtils.prepareEncountersDataToGraph(service.getEncountersPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis()));
+        appDataList.add("Encounter");
+        appDataList.add(dataToGraph);
+        
+        dataToGraph = PerformanceMonitoringUtils.prepareFormsDataToGraph(service.getFormsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis()));
+        appDataList.add("Form");
+        appDataList.add(dataToGraph);
+        
+        dataToGraph = PerformanceMonitoringUtils.preparePatientsDataToGraph(service.getPatientsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis()));
+        appDataList.add("Patient");
+        appDataList.add(dataToGraph);
+        
+        dataToGraph = PerformanceMonitoringUtils.prepareConceptsDataToGraph(service.getConceptsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis()));
+        appDataList.add("Concept");
+        appDataList.add(dataToGraph);
+        
+        dataToGraph = PerformanceMonitoringUtils.prepareObservationsDataToGraph(service.getObservationsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis()));
+        appDataList.add("Observation");
+        appDataList.add(dataToGraph);
+        
+        dataToGraph = PerformanceMonitoringUtils.prepareVisitsDataToGraph(service.getVisitsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis()));
+        appDataList.add("Visit");
+        appDataList.add(dataToGraph);
+        
+        dataToGraph = PerformanceMonitoringUtils.prepareReportsDataToGraph(service.getReportsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis()));
+        appDataList.add("Report");
+        appDataList.add(dataToGraph);
+
+		return appDataList;
+    }
+    
     @RequestMapping(value = "/module/systemmetrics/loggedInUsers", method = RequestMethod.GET)
     public void countLogins(ModelMap model) {
         model.addAttribute("user", Context.getAuthenticatedUser());
@@ -408,5 +451,14 @@ public class  SystemPerformanceandUtilizationManageController {
 		java.lang.management.RuntimeMXBean runtimeMXBean = 
 		         ManagementFactory.getRuntimeMXBean();
         return 	runtimeMXBean.getVmVendor();
+	}
+	 /* 
+     * Module Existence Check For Google Chrome Extension
+     */
+	@RequestMapping(value = "/module/systemmetrics/isExisted", method = RequestMethod.GET)
+	public @ResponseBody boolean isModuleExisted(ModelMap model)
+	{	
+		model.addAttribute("user", Context.getAuthenticatedUser());
+        return true;
 	}
 }

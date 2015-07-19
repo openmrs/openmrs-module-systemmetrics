@@ -54,6 +54,14 @@
             <div id="view2">
 				<div>
 					<span>
+						<a href="applicationGlobal.form">
+						<input type="button" name="logins_button" id="user_login_chart_button" value="View" class="view_indicator"/>
+						</a>
+					</span>
+					<span><b>All Stats </b></span>
+				</div>
+				<div>
+					<span>
 						<a href="loggedInUsers.form">
 						<input type="button" name="logins_button" id="user_login_chart_button" value="View" class="view_indicator"/>
 						</a>
