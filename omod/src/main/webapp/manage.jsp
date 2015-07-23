@@ -58,7 +58,15 @@
 						<input type="button" name="logins_button" id="user_login_chart_button" value="View" class="view_indicator"/>
 						</a>
 					</span>
-					<span><b>All Stats </b></span>
+					<span><b>Data Charts </b></span>
+				</div>
+				<div>
+					<span>
+						<a href="appGlobalTable.form">
+						<input type="button" name="logins_button" id="user_login_chart_button" value="View" class="view_indicator"/>
+						</a>
+					</span>
+					<span><b>Data Tables</b></span>
 				</div>
 				<div>
 					<span>
@@ -67,63 +75,7 @@
 						</a>
 					</span>
 					<span><b> User Logins </b></span>
-				</div>
-				<div>
-					<span>
-						<a href="createdEncounters.form">
-						<input type="button" name="enc_button" id="enc__button" value="View" class="view_indicator"/>
-						</a>
-					</span>
-					<span><b> Created Encounters </b></span>
-				</div>
-				<div>
-					<span>
-						<a href="createdPatients.form">
-						<input type="button" name="enc_button" id="enc__button" value="View" class="view_indicator"/>
-						</a>
-					</span>
-					<span><b> Created Patients </b></span>
-				</div>
-				<div>
-					<span>
-						<a href="createdForms.form">
-						<input type="button" name="enc_button" id="enc__button" value="View" class="view_indicator"/>
-						</a>
-					</span>
-					<span><b> Created Forms </b></span>
-				</div>
-				<div>
-					<span>
-						<a href="createdVisits.form">
-						<input type="button" name="enc_button" id="enc__button" value="View" class="view_indicator"/>
-						</a>
-					</span>
-					<span><b> Created Visits </b></span>
-				</div>
-				<div>
-					<span>
-						<a href="createdObservations.form">
-						<input type="button" name="enc_button" id="enc__button" value="View" class="view_indicator"/>
-						</a>
-					</span>
-					<span><b> Created Observations </b></span>
-				</div>
-				<div>
-					<span>
-						<a href="createdConcepts.form">
-						<input type="button" name="enc_button" id="enc__button" value="View" class="view_indicator"/>
-						</a>
-					</span>
-					<span><b> Created Concepts </b></span>
-				</div>
-				<div>
-					<span>
-						<a href="ranReports.form">
-						<input type="button" name="enc_button" id="enc__button" value="View" class="view_indicator"/>
-						</a>
-					</span>
-					<span><b> Report Runs </b></span>
-				</div>				
+				</div>			
             </div>
             <div id="view3">
 				<div>

@@ -115,6 +115,11 @@ public class  SystemPerformanceandUtilizationManageController {
     public void applicationGlobal(ModelMap model) {
         model.addAttribute("user", Context.getAuthenticatedUser());
     }
+    
+    @RequestMapping(value = "/module/systemmetrics/appGlobalTable", method = RequestMethod.GET)
+    public void appGlobalTable(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+    }
 
     @RequestMapping(value = "/module/systemmetrics/globalAppData", method = RequestMethod.GET)
     public  @ResponseBody List<String> globalAppData(ModelMap model) {
@@ -153,6 +158,67 @@ public class  SystemPerformanceandUtilizationManageController {
 
 		return appDataList;
     }
+    
+
+    @RequestMapping(value = "/module/systemmetrics/globalAppTableData", method = RequestMethod.GET)
+    public  @ResponseBody List<String> globalAppTableData(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        List<String> appDataList = new ArrayList<String>();
+        Long dataToGraph = new Long(0l);
+        PerformanceMonitoringService service = PerformanceMonitoringUtils.getService();
+        
+        dataToGraph = 0l;
+        for(EncountersPerHourEntry entry : service.getEncountersPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis())){
+        	dataToGraph += entry.getEncounterCount();
+        }
+        appDataList.add("Encounter");
+        appDataList.add(dataToGraph.toString());
+        
+        dataToGraph = 0l;
+        for(FormsPerHourEntry entry : service.getFormsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis())){
+        	dataToGraph += entry.getFormCount();
+        }
+        appDataList.add("Form");
+        appDataList.add(dataToGraph.toString());
+
+        dataToGraph = 0l;
+        for(PatientsPerHourEntry entry : service.getPatientsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis())){
+        	dataToGraph += entry.getPatientCount();
+        }
+        appDataList.add("Patient");
+        appDataList.add(dataToGraph.toString());
+        
+        dataToGraph = 0l;
+        for(ConceptsPerHourEntry entry : service.getConceptsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis())){
+        	dataToGraph += entry.getConceptCount();
+        }
+        appDataList.add("Concept");
+        appDataList.add(dataToGraph.toString());
+        
+        dataToGraph = 0l;
+        for(ObservationsPerHourEntry entry : service.getObservationsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis())){
+        	dataToGraph += entry.getObservationCount();
+        }
+        appDataList.add("Observation");
+        appDataList.add(dataToGraph.toString());
+        
+        dataToGraph = 0l;
+        for(VisitsPerHourEntry entry : service.getVisitsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis())){
+        	dataToGraph += entry.getVisitCount();
+        }
+        appDataList.add("Visit");
+        appDataList.add(dataToGraph.toString());
+        
+        dataToGraph = 0l;
+        for(ReportsPerHourEntry entry : service.getReportsPerHourEntryForChart(System.currentTimeMillis() - 43200000, System.currentTimeMillis())){
+        	dataToGraph += entry.getReportCount();
+        }
+        appDataList.add("Report");
+        appDataList.add(dataToGraph.toString());
+        
+		return appDataList;
+    }
+    
     
     @RequestMapping(value = "/module/systemmetrics/loggedInUsers", method = RequestMethod.GET)
     public void countLogins(ModelMap model) {

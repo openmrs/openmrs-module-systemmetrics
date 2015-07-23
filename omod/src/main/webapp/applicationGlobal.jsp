@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp"%>
 
-<%@ include file="template/localHeader.jsp"%>
+<%@ include file="template/localHeaderApp.jsp"%>
 
 	<!-- Tell 1.7+ versions of core to not include JQuery themselves. Also, on 1.7+ we may get different jquery and jquery-ui versions than 1.3.2 and 1.7.2 -->
 	<c:set var="DO_NOT_INCLUDE_JQUERY" value="true"/>
@@ -71,68 +71,6 @@
 
     var dataChart = new google.visualization.LineChart(document.getElementById('chart_div'));
     dataChart.draw(dataTable, dataOptions);
-		/*
-		var Label = new Array();
-		var text = globalAppData[3];// this list contains the Date and Memory Usage data from the model
-		var timeAndDataUsageArray = eval("[" + text + "]");
-		var i;
-		for(i=0;i<timeAndDataUsageArray.length;i++){
-			var d = new Date(timeAndDataUsageArray[i][0]);
-			Label[i] = d.toLocaleTimeString();
-		}	
-		$('#chart_div').highcharts({
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Application Indicators'
-        },
-        subtitle: {
-            text: 'OpenMRS System Performance & Utilization Module'
-        },
-        xAxis: {
-            categories: Label
-        },
-        yAxis: {
-            title: {
-                text: 'Counts'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
-                },
-                enableMouseTracking: false
-            }
-        },
-        series: [{
-            name: globalAppData[0],
-            data: convertDataToArr(globalAppData[1])
-        }, {
-            name: globalAppData[2],
-            data: convertDataToArr(globalAppData[3])
-        }, {
-            name: globalAppData[4],
-            data: convertDataToArr(globalAppData[5])
-        }, {
-            name: globalAppData[6],
-            data: convertDataToArr(globalAppData[7])
-        }, {
-            name: globalAppData[8],
-            data: convertDataToArr(globalAppData[9])
-        }, {
-            name: globalAppData[10],
-            data: convertDataToArr(globalAppData[11])
-        }, {
-            name: globalAppData[12],
-            data: convertDataToArr(globalAppData[13])
-        }, {
-            name: globalAppData[14],
-            data: convertDataToArr(globalAppData[15])
-        }]
-		});
-		*/
 	}
 	setInterval(function() {
 		drawChart();
