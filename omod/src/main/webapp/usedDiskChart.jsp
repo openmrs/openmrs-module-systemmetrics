@@ -23,6 +23,7 @@
 	function updateTable(){
 		var disk_table = document.getElementById('disk_usage_data');
 		disk_table.innerHTML = "";
+		var disk_td;
 		for(var i = 0; i < disk_usage_val.length; i++){
 			disk_td= '<tr><td>'+disk_usage_val[i].absolutePath+
 					'</td><td>'+((disk_usage_val[i].totalSpace-disk_usage_val[i].freeSpace)/Math.pow(1024,size)).toFixed(size)+

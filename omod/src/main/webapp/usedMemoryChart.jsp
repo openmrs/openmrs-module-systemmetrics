@@ -7,7 +7,6 @@
 	<c:set var="DO_NOT_INCLUDE_JQUERY" value="true"/>
 
 	<openmrs:htmlInclude file="/moduleResources/systemmetrics/js/lib/jquery/jquery.min.js" />
-	<openmrs:htmlInclude file="/moduleResources/systemmetrics/js/lib/charts/chart.min.js" />
 	<openmrs:htmlInclude file="/moduleResources/systemmetrics/js/methods.js" />
 
     <head>
