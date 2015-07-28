@@ -8,7 +8,7 @@
 
 	<openmrs:htmlInclude file="/moduleResources/systemmetrics/css/styles.css"/>
 	<openmrs:htmlInclude file="/moduleResources/systemmetrics/js/lib/jquery/jquery.min.js" />
-	<openmrs:htmlInclude file="/moduleResources/systemmetrics/js/lib/charts/highcharts.js" />
+	<openmrs:htmlInclude file="/moduleResources/systemmetrics/js/lib/export/excellentexport.min.js" />
 	<openmrs:htmlInclude file="/moduleResources/systemmetrics/js/methods.js" />
 
     <head>
@@ -58,6 +58,12 @@
 			<tbody id="count_data">  
 			</tbody>    				
 		</table>
+		<br>
+		<div align="center">
+			<a class="view_indicator" download="data.xls" href="#" onclick="return ExcellentExport.excel(this, 'count_table', 'Application Data');"><input type="button" name="chart_button" id="per_sec_chart_button" value="Excel" class="view_indicator"/></a>
+			<a class="view_indicator" download="data.csv" href="#" onclick="return ExcellentExport.csv(this, 'count_table');">						<input type="button" name="chart_button" id="per_sec_chart_button" value="CSV" class="view_indicator"/></a>
+			<br>
+		</div>
   		</div>
 	</div>
     </body>
